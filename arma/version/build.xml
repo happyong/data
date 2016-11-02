@@ -1,0 +1,98 @@
+<?xml version="1.0"?>
+<project basedir=".." default="dist">
+	<target name="setvars">
+		<property environment="env" />
+		<path id="my-class-path">
+			<pathelement path="build" />
+			<fileset dir="WebContent/WEB-INF/lib" includes="**/*.jar" />
+			<fileset dir="C:\apache-tomcat-6.0.18\lib" includes="**/*.jar" />
+		</path>
+		
+		<!-- Init Task patchtasks -->
+		<path id="path.antexts">
+			<pathelement location="ant-exts.jar"/>
+		</path>
+		<typedef resource="com/neulion/iptv/ant/antextslib.xml" classpathref="path.antexts" />
+		<patchversion version="1.2" name="arma" module="arma" />
+		<property name="dest.dir" location="D:\works\arma\assets\product\arma"/>
+		<property name="build.base" location="${dest.dir}\Build"/>
+		<property name="build.dir" location="${build.base}\${build-name}"/>
+		<property name="patch.dir" location="${dest.dir}\Patch\${patch-name}"/>
+		<echo message="*** BUILD ${build-name} ***" />
+		<echo message="*** PATCH ${patch-name} ***" />
+	</target>
+
+	<!-- Clean Build -->
+	<target name="clean" depends="setvars">
+		<delete dir="cbin" />
+		<mkdir dir="cbin" />
+	</target>
+
+	<!-- Compile -->
+	<target name="compile-classes" depends="clean">
+		<!-- Compile Classes -->
+		<javac debug="on" deprecation="on" encoding="UTF-8" target="1.6" destdir="cbin">
+			<classpath>
+				<path refid="my-class-path" />
+			</classpath>
+			<src path="src" />
+		</javac>
+
+		<!-- Copy Files -->
+		<copy todir="cbin" encoding="UTF-8">
+			<fileset dir="src" excludes="**/*.java,**/*_zh_CN_8859.properties"/>
+		</copy>
+	</target> 
+	
+	<!-- Build Jar File -->
+	<target name="jar" depends="compile-classes">
+		<jar jarfile="WebContent/WEB-INF/lib/${module}.jar" basedir="cbin">
+			<manifest>				
+				<attribute name="Specification-Title" value="${name}"/>
+				<attribute name="Specification-Version" value="${version}"/>
+				<attribute name="Specification-Vendor" value="${company}"/>
+				<attribute name="Implementation-Title" value="${name}"/>
+				<attribute name="Implementation-Version" value="${version-impl}"/> 
+				<attribute name="Implementation-Vendor" value="${company}"/>				
+			</manifest>
+		</jar>
+		<delete dir="cbin" />
+	</target>
+
+	<!-- Last Task -->
+	<target name="dist" depends="jar">
+
+		<!-- War Build -->
+		<mkdir dir="${build.dir}" />
+		<delete file="${build.dir}/${module}.war"/>
+		<war destfile="${build.dir}/${module}.war" webxml="WebContent/WEB-INF/web.xml">
+			<fileset dir="WebContent" excludes="WEB-INF/classes/**/*.java,WEB-INF/logs/**,WEB-INF/release/**,WEB-INF/template/**,highcharts/**,upload/**,**/*.db,**/*.bak" />
+			<fileset dir="." includes="version/vos_release.txt" />
+		</war>
+		<delete file="WebContent/WEB-INF/lib/${module}.jar"/>
+
+		<!-- UnZip Build -->
+		<delete dir="${build.dir}/${name}"/>
+		<unzip src="${build.dir}/${module}.war" dest="${build.dir}/${name}" encoding="gb2312" />
+
+		<!-- Zip Patch -->
+		<mkdir dir="${patch.dir}/cbin" />
+		<patchdiff bycontent="true" buildpath="${build.base}" destpath="${patch.dir}/cbin" excludes="WEB-INF/config/**,WEB-INF/release/**" />
+		<zip destfile="${patch.dir}/${name}.zip" basedir="${patch.dir}/cbin" />
+		<delete dir="${patch.dir}/cbin"/>
+
+		<!-- UnZip Patch -->
+		<delete dir="${patch.dir}/${name}"/>
+		<unzip src="${patch.dir}/${name}.zip" dest="${patch.dir}/${name}" encoding="gb2312" />
+
+		<!-- Zip Src -->
+		<tstamp>
+			<format property="now" pattern="yy.MM.dd.HHmm" locale="en" />
+		</tstamp>		
+		<property name="src.dir" location="${dest.dir}/${module}_src_${now}.zip"/>
+		<delete file="${src.dir}"/>
+		<zip destfile="${src.dir}" basedir="." excludes="build/**,WebContent/WEB-INF/release/**,**/logs/**,**/*.db,**/*.bak"/>
+
+	</target>		
+	
+</project>

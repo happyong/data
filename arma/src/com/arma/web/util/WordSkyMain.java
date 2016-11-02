@@ -40,7 +40,7 @@ public class WordSkyMain
     }
     
     private static List<String> lines;
-    private static final File file = new File("E:/中国军史人物.txt");
+    private static final File file = new File("D:/中国军史人物.txt");
     protected static void dotext()
     {
         if (!file.exists()) return;

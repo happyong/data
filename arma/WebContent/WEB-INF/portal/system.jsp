@@ -66,20 +66,20 @@ $(function() {
 			var html = $.trim($(this).html());
 			switch(html) {
 				case "/servlets/kms/knew":
-					appendSvcParamRow(nosvc, "kmIdBase", "*", "21101");
+					appendSvcParamRow(nosvc, "kmIdBase", "*", "1601101");
 					appendSvcParamRow(nosvc, "kmCount", "*", "10");
-					appendSvcParamRow(nosvc, "ckeyId", "*", "120");
+					appendSvcParamRow(nosvc, "ckeyId", "*", "160");
 					appendSvcParamRow(true, "admin&nbsp;&nbsp;*", "");
 					break;
 				case "/servlets/kms/kfmt":
-					appendSvcParamRow(nosvc, "kmIdBase", "*", "0");
+					appendSvcParamRow(nosvc, "kmIdBase", "*");
 					appendSvcParamRow(nosvc, "fmtKeys", "*", "0");
 					appendSvcParamRow(nosvc, "kmIdMin");
 					appendSvcParamRow(nosvc, "kmIdMax");
 					appendSvcParamRow(true, "admin&nbsp;&nbsp;*", "");
 					break;
 				case "/servlets/kms/kcfmt":
-					appendSvcParamRow(nosvc, "ckeyId", "*", "120");
+					appendSvcParamRow(nosvc, "ckeyId", "*", "160");
 					appendSvcParamRow(true, "admin&nbsp;&nbsp;*", "");
 					break;
 				case "/servlets/kms/kdfmt":
@@ -125,7 +125,7 @@ $(function() {
 					appendSvcParamRow(true, "admin&nbsp;&nbsp;*", "");
 					break;
 				case "/servlets/kms/kutil":
-					appendSvcParamRow(nosvc, "method", "*", "coast");
+					appendSvcParamRow(nosvc, "method", "*", "keyword");
 					appendSvcParamRow(true, "admin&nbsp;&nbsp;*", "");
 					break;
 				case "/serverlog":

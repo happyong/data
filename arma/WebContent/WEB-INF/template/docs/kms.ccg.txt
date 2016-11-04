@@ -1,0 +1,71 @@
+﻿
+http://blog.sina.com.cn/s/articlelist_1668125265_0_1.html
+http://lt.cjdby.net/forum.php?mod=viewthread&tid=2075373&orderby=dateline
+
+海警35104、海警33012
+
+Ⅰ型
+Ⅱ型
+Ⅲ型
+
+
+/* 所有关键字：1，主类：100，解放军将军，120 中国舰艇，130 中国海警船，150 火箭发射，180 美国舰艇，181 俄罗斯舰艇，182 日本舰艇，999 其它 */
+
+1,'13::10::11::12::14::15','所有关键字','',1,0,now()
+100,'1000::1001::1002::1003::1004::2000::2001::1005::1006::3000','解放军将军','PLA-General',1,0,now()
+120,'1201::1203::1208::1204::1205::2000::2001::1210::1211::1212::1202::1200::1206::1006::3000','中国舰艇','RPC-Warship',1,0,now()
+130,'1201::1203::1208::2000::2001::1210::1211::1212::1202::1200::1206::1006::3000','中国海警船','RPC-Coast-Guard-Boat',1,0,now()
+150,'1500::1501::1502::1503::1504::1505::1506::2000::2001::3000','火箭发射','Rocket-Launch',1,0,now()
+180,'1201::1203::1208::1209::2000::2001::1210::1211::1212::1202::1200::1207::1006::3000','美国舰艇','USA-Warship',1,0,now()
+181,'1201::1203::1208::2000::2001::1202::1200::1206::1006::3000','俄罗斯舰艇','RUS-Warship',1,0,now()
+182,'1201::1203::1208::2000::2001::1210::1211::1212::1202::1200::1207::1006::3000','日本舰艇','JPN-Warship',1,0,now()
+999,'2000::2001::3000','其他','Other',1,0,now()
+
+/* 10 关键字标识，11 中文名称, 12 英文名称, 13 赋值类型, 14 自动完成功能, 15 编辑时间 */
+/* 1000 人名，1001 现职, 1002 军衔, 1003 出生年月, 1004 籍贯, 1005 曾任，1006 现役 */
+/* 1200 舰名，1201 服役时间，1202 下水时间，1203 造船厂，1204 支大队，1205 舰队，1206 舷号，1207 编号，1208 舰种，1209 母港，1210 尺度，1211 排水量，1212 航速 */
+/* 1500 序号，1501 起飞时间，1502 有效载荷，1503 运载火箭，1504 发射地点，1505 发射轨道，1506 发射结果 */
+/* 2000 标签，2001 相关事件 */
+/* 3000 更新时间 */
+
+
+
+SET @tag = '护卫舰053H1G型';
+SELECT * FROM t_knowkey WHERE key_id=2000 AND km_id IN (SELECT km_id FROM t_knowkey WHERE key_id=1208 AND key_val=@tag) UNION
+SELECT * FROM t_knowkey WHERE key_id=1210 AND km_id IN (SELECT km_id FROM t_knowkey WHERE key_id=1208 AND key_val=@tag) UNION
+SELECT * FROM t_knowkey WHERE key_id=1211 AND km_id IN (SELECT km_id FROM t_knowkey WHERE key_id=1208 AND key_val=@tag) UNION
+SELECT * FROM t_knowkey WHERE key_id=1212 AND km_id IN (SELECT km_id FROM t_knowkey WHERE key_id=1208 AND key_val=@tag);
+
+SET @tag = '护卫舰053H1G型', @val1212 = '26节';
+INSERT INTO t_knowkey (km_id, key_id, key_val, update_date) SELECT * FROM (SELECT km_id, 1212, @val1212, NOW() FROM t_knowkey WHERE key_id=1208 AND key_val=@tag) b;
+
+SET @tag = '护卫舰053H1G型', @val1210 = '103.2×10.8×3.19', @val1211 = '1960吨，正常1674吨';
+UPDATE t_knowkey SET key_val=@val1210 WHERE key_id=1210 AND km_id IN (SELECT * FROM (SELECT km_id FROM t_knowkey WHERE key_id=1208 AND key_val=@tag) b);
+UPDATE t_knowkey SET key_val=@val1211 WHERE key_id=1211 AND km_id IN (SELECT * FROM (SELECT km_id FROM t_knowkey WHERE key_id=1208 AND key_val=@tag) b);
+
+SET @tag = '护卫舰053H1G型';
+DELETE FROM t_knowkey WHERE key_id=1212 AND km_id IN (SELECT * FROM (SELECT km_id FROM t_knowkey WHERE key_id=1208 AND key_val=@tag) b);
+
+
+
+SET @tag = '海警1112';
+SELECT * FROM t_knowkey WHERE km_id IN (SELECT km_id FROM t_knowkey WHERE key_id=2000 AND key_val=@tag) ORDER BY key_id, id;
+SELECT * FROM t_knowledge WHERE km_id IN (SELECT km_id FROM t_knowkey WHERE key_id=2000 AND key_val=@tag);
+
+
+SET @tag = '海警船3000吨级', @val1210 = '98×15.2×7.8', @val1211 = '3980吨', @val1212 = '18节';
+
+SELECT * FROM t_knowkey WHERE key_id=2000 AND km_id IN (SELECT km_id FROM t_knowkey WHERE key_id=1208 AND key_val=@tag);
+
+SELECT * FROM t_knowkey WHERE key_id=1210 AND km_id IN (SELECT km_id FROM t_knowkey WHERE key_id=1208 AND key_val=@tag) UNION
+SELECT * FROM t_knowkey WHERE key_id=1211 AND km_id IN (SELECT km_id FROM t_knowkey WHERE key_id=1208 AND key_val=@tag) UNION
+SELECT * FROM t_knowkey WHERE key_id=1212 AND km_id IN (SELECT km_id FROM t_knowkey WHERE key_id=1208 AND key_val=@tag);
+
+UPDATE t_knowkey SET key_val=@val1210 WHERE key_id=1210 AND km_id IN (SELECT * FROM (SELECT km_id FROM t_knowkey WHERE key_id=1208 AND key_val=@tag) b);
+UPDATE t_knowkey SET key_val=@val1211 WHERE key_id=1211 AND km_id IN (SELECT * FROM (SELECT km_id FROM t_knowkey WHERE key_id=1208 AND key_val=@tag) b);
+UPDATE t_knowkey SET key_val=@val1212 WHERE key_id=1212 AND km_id IN (SELECT * FROM (SELECT km_id FROM t_knowkey WHERE key_id=1208 AND key_val=@tag) b);
+
+
+SELECT km_id, key_id, key_val FROM t_knowkey WHERE key_id=1208 AND km_id>30000;
+SELECT DISTINCT km_id, key_id, key_val FROM t_knowkey WHERE key_id=1208 AND km_id>30000;
+

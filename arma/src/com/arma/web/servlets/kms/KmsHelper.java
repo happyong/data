@@ -504,7 +504,7 @@ public class KmsHelper
         List<Map<String, Object>> params = new ArrayList<Map<String, Object>>();
         String cond = kmIdCond(false, kmIdMin, kmIdMax) + " order by km_id ";
         List<TKnowledge> tkms = dao.getKnowledges(cond);
-        List<TKnowkey> tags = dao.getKnowkeys("key_id != 2001 and " + cond + " desc, id desc ");
+        List<TKnowkey> tags = dao.getKnowkeys("key_id != 2001 and " + cond + " desc, id ");
         for (TKnowledge tkm : tkms)
         {
             Map<String, Object> map = tkm.toDbMap();
@@ -547,7 +547,7 @@ public class KmsHelper
                 }
                 else if (ckeyId == 130)
                 {
-                    if (Character.isDigit(val.charAt(val.length() - 1))) content = val;
+                    if (content.length() < 1 && Character.isDigit(val.charAt(val.length() - 1))) content = val;
                 }
             }
         }

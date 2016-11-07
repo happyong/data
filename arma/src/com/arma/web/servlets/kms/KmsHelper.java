@@ -280,7 +280,8 @@ public class KmsHelper
         for (Knowledge km : kms)
         {
             params.clear();
-            date.setTime(date.getTime() + 4000 + WebUtil.random(4000));
+            // date.setTime(date.getTime() + 4000 + WebUtil.random(4000));
+            date.setTime(date.getTime() + 4000);
             int kmId0 = km.getTkm().getKmId(), kmId = kmId0 + idmove, ckeyId = km.getTkm().getCkeyId(), count = 0;
             if (fmtKeys)
             {
@@ -379,7 +380,8 @@ public class KmsHelper
         for (int i = 0; i < kmCount; i++)
         {
             if (updateKm(false, new Date(now), new Knowledge().fromRequest(request)) > 0) creates++;
-            now += (2000 + WebUtil.random(6000));
+            // now += (2000 + WebUtil.random(4000));
+            now += 4000;
         }
         return resp(key, true, param, "alter|" + alters + "|created|" + creates);
     }
@@ -488,7 +490,8 @@ public class KmsHelper
             Map<String, Object> map = WebUtil.param("kmId", tkm.getKmId());
             map.put("updateDate", new Date(now));
             params.add(map);
-            now += (2000 + WebUtil.random(6000));
+            // now += (2000 + WebUtil.random(4000));
+            now += 4000;
         }
         int count = dao.updateKmDates(params);
         return resp(key, true, "timeBase|" + timeBase + "|" + param, "updated|" + count);

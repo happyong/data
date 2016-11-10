@@ -26,8 +26,10 @@ public class KmsUtil
 {
 	public static boolean handleCoast()
 	{
-        List<String> result = new ArrayList<String>();
 	    List<String> lines = FileUtil2.readLines("arma.coast.txt", null, new File("c:"));
+        if (lines == null || lines.size() < 1) return false;
+
+        List<String> result = new ArrayList<String>();
         TKmsDaoService dao = GlobalCache.getInstance().getBean(TKmsDaoService.class);
 	    for (int i = lines.size() - 1; i >= 0; i--)
 	    {
@@ -80,6 +82,8 @@ public class KmsUtil
     public static boolean handleFleet()
     {
         List<String> lines = FileUtil2.readLines("arma.fleet.txt", null, new File("c:"));
+        if (lines == null || lines.size() < 1) return false;
+        
         Map<String, List<String>> fleets = new HashMap<String, List<String>>();
         for (String line : lines)
         {
@@ -173,6 +177,91 @@ public class KmsUtil
         if (start < 0 || start >= arr.length) return -1;
         for (int i = start; i < arr.length; i++) if (!WebUtil.empty(arr[i])) return i;
         return -1;
+    }
+    
+    public static boolean handleVote()
+    {
+        List<String> lines = FileUtil2.readLines("arma.vote.txt", null, new File("c:"));
+        if (lines == null || lines.size() < 1) return false;
+        
+        int pos1 = -1, pos2 = -1;
+        String key1 = "{", key2 = "}", key = InVarAM.s_vote_key;
+        List<String[]> keys = new ArrayList<String[]>();
+        while (true)
+        {
+            int p1 = key.indexOf(key1, pos1 + 1), p2 = key.indexOf(key2, pos2 + 1);
+            if (p1 == -1 || p2 == -1 || p2 <= p1) break;
+            int t2 = key.indexOf(key1, p2 + 1);
+            String[] arr = new String[3];
+            arr[0] = key.substring(p1 + 1, p2);
+            arr[1] = key.substring(pos2 == -1 ? 0 : pos2 + 1, p1);
+            arr[2] = key.substring(p2 + 1, (t2 == -1 ? key.length() : t2));
+            keys.add(arr);
+            pos1 = p1;
+            pos2 = p2;
+        };
+        
+        int v1 = 0, v2 = 0, no = 0;
+        List<Map<String, String>> list = new ArrayList<Map<String, String>>();
+        for (int i = lines.size() - 1; i >= 0; i--)
+        {
+            if (i < 1) continue;
+            String line = lines.get(i).trim();
+            if (line.length() < 1 || line.indexOf(InVarAM.s_vote_seps[0]) < 1) continue;
+            String line2 = lines.get(i - 1).trim();
+            int pos = (line2.startsWith("2016") ? line2.indexOf(" ") : -1);
+            if (pos < 1 || line2.length() < pos + 6) continue;
+            no++;
+            Map<String, String> map = new HashMap<String, String>();
+            for (String[] arr : keys)
+            {
+                pos1 = (arr[1].length() == 0 ? 0 : line.indexOf(arr[1]));
+                pos2 = (arr[2].length() == 0 ? line.length() : line.indexOf(arr[2]));
+                if (pos1 == -1 || pos2 == -1) System.out.println("scan invalid - " + arr[0] + "_" + arr[1] + "_" + arr[2]);
+                else 
+                {
+                    String value = line.substring(pos1 + arr[1].length(), pos2);
+                    if ("cand".equals(arr[0]) && WebUtil.hit(value, InVarAM.s_vote_cands) == -1) System.out.println("cand invalid - " + value);
+                    else if ("count".equals(arr[0]) && WebUtil.str2int(value) < 1) System.out.println("count invalid - " + value);
+                    else map.put(arr[0], line.substring(pos1 + arr[1].length(), pos2));
+                }
+            }
+            if (map.size() < keys.size()) System.out.println("line invalid - " + line);
+            else 
+            {
+                int count = WebUtil.str2int(map.get("count"));
+                boolean is1 = (InVarAM.s_vote_cands[0].equals(map.get("cand")));
+                v1 += (is1 ? count : 0);
+                v2 += (is1 ? 0 : count);
+                String info = (line.indexOf(InVarAM.s_vote_seps[1]) == -1 ? "" : InVarAM.s_vote_seps[1]);
+                if (info.length() > 0 && line.indexOf(InVarAM.s_vote_seps[2]) != -1) info = InVarAM.s_vote_seps[2] + info;
+                else if (info.length() > 0 && line.indexOf(InVarAM.s_vote_seps[3]) != -1) info = InVarAM.s_vote_seps[3] + info;
+                map.put("no", "" + no);
+                map.put("v1", "" + v1);
+                map.put("v2", "" + v2);
+                map.put("time", line2.substring(pos + 1, pos + 6));
+                map.put("info", (info.length() > 0 ? InVarAM.s_vote_seps[4] + info : ""));
+                list.add(map);
+            }
+            i--;
+        }
+        boolean revert = (v2 > v1);
+        List<String> result = new ArrayList<String>();
+        for (int i = list.size() - 1; i >= 0; i--)
+        {
+            Map<String, String> map = list.get(i);
+            String line = InVarAM.s_vote_val;
+            if (revert)
+            {
+                String str = map.get("v1");
+                map.put("v1", map.get("v2"));
+                map.put("v2", str);
+            }
+            for (String str : map.keySet()) line = WebUtil.substituteName(key1 + str + key2, map.get(str), line);
+            result.add(line);
+        }
+        FileUtil2.writeLines(result, "arma.vote.fmt.txt", null, WebUtil.LINE_WIN, new File("c:"));
+        return true;
     }
     
     public static boolean handleTkkTest(int min)

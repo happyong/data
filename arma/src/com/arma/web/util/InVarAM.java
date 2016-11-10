@@ -175,4 +175,9 @@ public class InVarAM
     public static final String s_fleet_tag = "索马里护航";
     public static final String s_fleet_key = "护航编队#";
     public static final String s_fleet_val = s_fleet_key + "{num00}，{date1}，中国海军第{num}批护航编队从{fleet}驻{addr}某军港解缆起航，执行护航任务。{date2}护航开始，{date3}护航结束，{date4}归港。护航编队由{list}组成。{info}";
+
+    public static final String[] s_vote_seps = new String[]{"】", "摇摆州", "超级", "重要", "；"};
+    public static final String[] s_vote_cands = new String[]{"特朗普", "希拉里"};
+    public static final String s_vote_key = "党{cand}赢得{name1}({name2})共{count}张";
+    public static final String s_vote_val = "    {no}\t{name1}\t\t{name2}\t\t{count}\t{cand}\t\t{v1}-{v2}\t\t东部07:00开票，19:00闭票，北京{time}结果{info}";
 }

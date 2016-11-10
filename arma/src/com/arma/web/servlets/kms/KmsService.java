@@ -246,6 +246,7 @@ public class KmsService extends AbstractBaseComponent
             String method = request.getParameter("method");
             if ("coast".equals(method)) map.put("result", KmsUtil.handleCoast());
             else if ("fleet".equals(method)) map.put("result", KmsUtil.handleFleet());
+            else if ("vote".equals(method)) map.put("result", KmsUtil.handleVote());
             else if (method.startsWith("tkktest")) map.put("result", KmsUtil.handleTkkTest(WebUtil.str2int(method.substring(7))));
         }
 		

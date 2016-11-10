@@ -83,7 +83,7 @@ $(function() {
 					appendSvcParamRow(true, "admin&nbsp;&nbsp;*", "");
 					break;
 				case "/servlets/kms/kdfmt":
-					appendSvcParamRow(nosvc, "timeBase", "", new Date().Format("yyyy-MM-dd hh:mm:ss"));
+					appendSvcParamRow(nosvc, "timeBase", "", "2016-10-18 20:45:28");
 					appendSvcParamRow(nosvc, "minutes", "", "0");
 					appendSvcParamRow(nosvc, "kmIdMin");
 					appendSvcParamRow(nosvc, "kmIdMax");

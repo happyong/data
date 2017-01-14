@@ -106,7 +106,7 @@ public class KmsUtil
             }
         }
 
-        String tags = "";
+        // String tags = "";
         Map<String, String> kmIds = new HashMap<String, String>();
         TKmsDaoService dao = GlobalCache.getInstance().getBean(TKmsDaoService.class);
         for (String tag : fleets.keySet())
@@ -123,8 +123,8 @@ public class KmsUtil
         {
             boolean update = false;
             String kmId = kmIds.get(tag);
-            List<Integer> kkids = dao.getKeyIds("km_id=" + kmId + " and key_id=2000 and key_val='" + InVarAM.s_fleet_tag + "'");
-            if (kkids == null || kkids.size() < 1) tags += InVarAM.s_sep1 + tag;
+            // List<Integer> kkids = dao.getKeyIds("km_id=" + kmId + " and key_id=2000 and key_val='" + InVarAM.s_fleet_tag + "'");
+            // if (kkids == null || kkids.size() < 1) tags += InVarAM.s_sep1 + tag;
             List<Map<String, Object>> list = dao.getKeys("km_id=" + kmId + " and key_id=2001 and key_val like '" + InVarAM.s_fleet_key + "%' order by key_val");
             for (String val : fleets.get(tag))
             {
@@ -133,7 +133,7 @@ public class KmsUtil
             }
             if (update) dao.updateKnowkeys(list);
         }
-        if (tags.length() > 0) KmsHelper.newKmKey4Tags(2000, InVarAM.s_fleet_tag, false, tags.substring(InVarAM.s_sep1.length()));
+        // if (tags.length() > 0) KmsHelper.newKmKey4Tags(2000, InVarAM.s_fleet_tag, false, tags.substring(InVarAM.s_sep1.length()));
         return true;
     }
     

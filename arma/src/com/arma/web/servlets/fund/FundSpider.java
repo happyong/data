@@ -174,7 +174,7 @@ public class FundSpider
 	{
 		String url = WebUtil.substituteName("{rn}", "" + System.currentTimeMillis(), InVarAM.s_fund_net_open_xml);
 		url = WebUtil.substituteName("{num}", "" + num, url);
-		Node root = ParseUtil.parseRoot(HttpUtil.postXml(url, "", WebUtil.CHARSET_GB2312), WebUtil.CHARSET_GB2312);
+		Node root = ParseUtil.parseRoot(HttpUtil.postXml(url, "", WebUtil.CHARSET_GB2312, null, null), WebUtil.CHARSET_GB2312);
 		List<Node> data = ParseUtil.nodes("data/item", root);
 		if (data == null || data.size() == 0) return -1;
 		int total = WebUtil.str2int(ParseUtil.xpathNode("total_num", root));
@@ -202,7 +202,7 @@ public class FundSpider
 	{
 		String url = WebUtil.substituteName("{rn}", "" + System.currentTimeMillis(), InVarAM.s_fund_net_cx_xml);
 		url = WebUtil.substituteName("{num}", "" + num, url);
-		Node root = ParseUtil.parseRoot(HttpUtil.postXml(url, "", WebUtil.CHARSET_GB2312), WebUtil.CHARSET_GB2312);
+		Node root = ParseUtil.parseRoot(HttpUtil.postXml(url, "", WebUtil.CHARSET_GB2312, null, null), WebUtil.CHARSET_GB2312);
 		List<Node> data = ParseUtil.nodes("data/item", root);
 		if (data == null || data.size() == 0) return -1;
 		int total = WebUtil.str2int(ParseUtil.xpathNode("total_num", root));

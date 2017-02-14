@@ -137,6 +137,42 @@ public class KmsUtil
         return true;
     }
     
+    public static boolean handleKeyVal(String param)
+    {
+        String[] params = param.split("::");
+        if (params == null || params.length < 3) return false;
+        String prefix = params[0], tags = params[1], newv = params[2], oldv = (params.length > 3 ? params[3] : tags);
+        String[] arr = WebUtil.unull(tags).split(InVarAM.s_sep1);
+        if (arr == null || arr.length < 1) return false;
+        
+        TKmsDaoService dao = GlobalCache.getInstance().getBean(TKmsDaoService.class);
+        for (String tag : arr) 
+        {
+            int pos = tag.indexOf(InVarAM.s_sep2);
+            if (pos > 0) tag = tag.substring(0, pos);
+            List<Integer> kmids = dao.getKmIds(true, "key_id=2000 and key_val='" + tag + "'");
+            if (kmids.size() < 1)
+            {
+                System.out.println(tag + " not found");
+                continue;
+            }
+            String kmId = "" + kmids.get(0);
+            List<Map<String, Object>> list = dao.getKeys("km_id=" + kmId + " and key_id=2001 and key_val like '" + prefix + "%" + oldv + "%' order by key_val");
+            if (list.size() < 1)
+            {
+                System.out.println(tag + " not found the key_val with prefix " + prefix);
+                continue;
+            }
+            for (Map<String, Object> map : list)
+            {
+                String val0 = (String) map.get("keyVal"), val2 = WebUtil.substituteName(oldv, newv, val0);
+                map.put("keyVal", val2);
+            }
+            dao.updateKnowkeys(list);
+        }
+        return true;
+    }
+    
     private static boolean hit(String newval, List<Map<String, Object>> list)
     {
         String prefix = newval.substring(0, InVarAM.s_fleet_key.length() + 2);

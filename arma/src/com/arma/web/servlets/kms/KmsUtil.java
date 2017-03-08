@@ -257,7 +257,7 @@ public class KmsUtil
                 else 
                 {
                     String value = line.substring(pos1 + arr[1].length(), pos2);
-                    if ("cand".equals(arr[0]) && WebUtil.hit(value, InVarAM.s_vote_cands) == -1) System.out.println("cand invalid - " + value);
+                    if ("cand".equals(arr[0]) && WebUtil.pos(value, InVarAM.s_vote_cands) == -1) System.out.println("cand invalid - " + value);
                     else if ("count".equals(arr[0]) && WebUtil.str2int(value) < 1) System.out.println("count invalid - " + value);
                     else map.put(arr[0], line.substring(pos1 + arr[1].length(), pos2));
                 }

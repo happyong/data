@@ -30,7 +30,7 @@ public class KmsCond
         {
             Keyword skey = KmsCacher.getKey(sortby);
             String[] sks = WebUtil.unull(ckey.getTkey().getContent()).split(WebUtil.sep_kval);
-            if (skey != null && !skey.empty() && WebUtil.hit("" + sortby, sks) >= 0) this.skey = skey;
+            if (skey != null && !skey.empty() && WebUtil.pos("" + sortby, sks) >= 0) this.skey = skey;
         }
 
         String conds0 = request.getParameter("conds");

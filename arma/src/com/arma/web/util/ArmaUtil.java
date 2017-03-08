@@ -16,12 +16,12 @@ public class ArmaUtil
 	public static boolean hitf(TSymbol bean)
 	{
 		if (bean == null || bean.empty()) return false;
-		return (hitfc(bean.getCode()) || WebUtil.hit(bean.getName(), InVarAM.s_fund_focus) != -1 || WebUtil.hit(bean.getNameS(), InVarAM.s_fund_focus) != -1);
+		return (hitfc(bean.getCode()) || WebUtil.pos(bean.getName(), InVarAM.s_fund_focus) != -1 || WebUtil.pos(bean.getNameS(), InVarAM.s_fund_focus) != -1);
 	}
 	
 	public static boolean hitfc(String code)
 	{
-		return (WebUtil.hit(code, InVarAM.s_fund_focus) != -1);
+		return (WebUtil.pos(code, InVarAM.s_fund_focus) != -1);
 	}
 	
 	public static boolean hitfi(String code)

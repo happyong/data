@@ -20,7 +20,7 @@ public class KmKeysComparator implements Comparator<TKnowkey>
 	public int compare(TKnowkey key1, TKnowkey key2)
 	{
 	    if (order == null) return 0;
-	    int pos1 = WebUtil.hit("" + key1.getKeyId(), order), pos2 = WebUtil.hit("" + key2.getKeyId(), order), ret = pos1 - pos2;
+	    int pos1 = WebUtil.pos("" + key1.getKeyId(), order), pos2 = WebUtil.pos("" + key2.getKeyId(), order), ret = pos1 - pos2;
 	    if (ret == 0 && key1.getKeyId() != KmsHelper.tagk()) ret = key1.getKeyVal().compareTo(key2.getKeyVal());
 	    return (ret > 0 ? 1 : (ret < 0 ? -1 : 0));
 	}

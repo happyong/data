@@ -39,7 +39,7 @@ public class TableMain
 	public static final String[][] ss = new String[][]{
         new String[]{"2015 NeuLion", "com.neulion.iptv.web.", "servlets.admin.", "InVarA", "WebUtil.obj2double("},
 	    new String[]{"2015 ARMA", "com.arma.web.", "servlets.kms.", "InVarKM", "ArmaUtil.s2d_0000("},
-        new String[]{"2015 NeuLion", "com.neulion.monitor.cluster.", "util.", "InVarA", "WebUtil.obj2double("}
+        new String[]{"2015 NeuLion", "com.neulion.monitor.cluster.", "live.", "InVarL", "WebUtil.obj2double("}
 	};
 	
 	private static void spring()

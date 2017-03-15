@@ -31,6 +31,7 @@ public class WordSkyMain
     public static void main(final String[] args)
     {
         FundMain.config();
+        if (!file.exists()) file = new File("D:/etc/中国军史人物.txt");
         
         dotext();
         // test1();
@@ -40,7 +41,7 @@ public class WordSkyMain
     }
     
     private static List<String> lines;
-    private static final File file = new File("D:/etc/中国军史人物.txt");
+    private static File file = new File("F:/etc/中国军史人物.txt");
     protected static void dotext()
     {
         if (!file.exists()) return;

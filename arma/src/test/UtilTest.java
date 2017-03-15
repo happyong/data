@@ -15,12 +15,14 @@ import com.neulion.iptv.web.util.WebUtil;
 
 public class UtilTest
 {
+	private static File user = new File("C:/Users/Administrator/Downloads");
     public static void config()
     {
         String user_dir = System.getProperty("user.dir");
         if (!new File(user_dir + "/log4j.xml").exists())
             user_dir = WebUtil.path0(user_dir + "/WebContent");
         DOMConfigurator.configure(user_dir + "/WEB-INF/config/log4j.xml");
+        if (!user.exists()) user = new File("C:/Users/Guoen.Yong/Downloads");
     }
 
     public static void main(String[] args)
@@ -35,7 +37,7 @@ public class UtilTest
     {
         String[] arr = InVarT.s_rename;
         long base = System.currentTimeMillis(), count = 0;
-        File[] files = new File("C:/Users/Administrator/Downloads/militray").listFiles();
+        File[] files = new File(user, "militray").listFiles();
         for (File file : files)
         {
             String name1 = file.getName();
@@ -57,7 +59,8 @@ public class UtilTest
     private static void getmap(String key, String blog)
     {
         String file = key + ".txt", parent = "";
-        File dir = new File("C:/Users/Administrator/Downloads/maps/" + key);
+        File dir = new File(user, "maps/" + key);
+        if (!dir.exists()) dir.mkdirs();
         FileUtil2.write(HttpUtil.getXml(blog, null, null, null), file, null, dir);
         WebUtil.sleep(500);
         List<String> list = new ArrayList<String>(), lines = FileUtil2.readLines(file, null, dir);

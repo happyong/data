@@ -31,6 +31,7 @@ import com.neulion.iptv.web.util.XmlOutput4j;
  */
 // FileSkyMain -base [-revert] -simple [-recursive]
 // FileSkyMain -base [-revert] -merges
+//FileSkyMain -base -modified
 public class FileSkyMain 
 {   
 	private static final String meta_file = ".meta.xml";
@@ -52,8 +53,9 @@ public class FileSkyMain
 		opts.addOption("simple", "simple", false, "simple mode");
 		opts.addOption("recursive", "recursive", false, "include subfolders for simple mode");
 		opts.addOption("merges", "merges", false, "merges mode");
+		opts.addOption("modified", "modified", false, "modified mode");
 		
-		String format = "FileSkyMain -base [-revert] [-simple] [-recursive] [-merges] ";
+		String format = "FileSkyMain -base [-revert] [-simple] [-recursive] [-merges] [-modified] ";
 		HelpFormatter formatter = new HelpFormatter();
 		CommandLineParser parser = new PosixParser();
 		CommandLine cl = null;
@@ -76,6 +78,18 @@ public class FileSkyMain
         	simple(revert, cl.hasOption("recursive"), base, base);
         else if (cl.hasOption("merges"))
         	merges(revert, base);
+        else if (cl.hasOption("modified"))
+        	modified(System.currentTimeMillis(), base);
+	}
+	
+	private static void modified(long time, File base)
+	{
+        base.setLastModified(time);
+        File[] files = base.listFiles();
+        if (files == null) return;
+        for (File file : files)
+        	if (file.isDirectory()) modified(time, file);
+        	else file.setLastModified(time);
 	}
 
 	// FileSkyMain -base [-revert] -simple [-recursive]

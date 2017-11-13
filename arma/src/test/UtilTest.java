@@ -30,7 +30,9 @@ public class UtilTest
         config();
 
         // rename();
-        getmap();
+        // getmap();
+        scan1();
+        // scan2();
     }
 
     protected static void rename()
@@ -181,5 +183,62 @@ public class UtilTest
             try { if (hc != null) hc.disconnect(); } catch (Exception e) {}
         }
         return false;
+    }
+    
+    protected static void scan1()
+    {
+        // int start = 721, end = 1115;
+        int start = 876, end = 1115;
+        File file = new File(InVarT.file_1);
+        List<String> lines = FileUtil2.readLines(file.getName(), null, file.getParentFile());
+        if (lines == null || lines.size() <= start) return;
+        int base = 0, count = 0, total = 0;
+        for (int i = start; i <= end; i++)
+        {
+            String line = lines.get(i);
+            if (WebUtil.empty(line)) continue;
+            if (line.indexOf(InVarT.sep_1) > 0)
+            {
+                String[] arr = line.split(InVarT.sep_1);
+                if (base < 1) base = (i + 1);
+                count += arr.length;
+            }
+            else if (count > 0)
+            {
+                total += count;
+                System.out.println("since line " + base + " - count " + count + ", total " + total);
+                base = 0;
+                count = 0;
+            }
+        }
+        if (count > 0)
+        {
+            total += count;
+            System.out.println("since line " + base + " - count " + count + ", total " + total);
+        }
+    }
+    
+    protected static void scan2()
+    {
+        File file1 = new File("D:\\etc\\a.txt"), file2 = new File("D:\\etc\\b.txt");
+        List<String> lines1 = FileUtil2.readLines(file1.getName(), null, file1.getParentFile()), lines2 = FileUtil2.readLines(file2.getName(), null, file2.getParentFile());
+        if (lines1 == null || lines1.size() < 1 || lines2 == null || lines2.size() < 1) return;
+        List<String> list1 = new ArrayList<String>(), list2 = new ArrayList<String>();
+        for (String line : lines1) if (!WebUtil.empty(line)) for (String str : line.split(InVarT.sep_1)) list1.add(str);
+        for (String line : lines2) if (!WebUtil.empty(line)) for (String str : line.split(InVarT.sep_1)) list2.add(str);
+        for (int i = list1.size() - 1; i >= 0; i--)
+        {
+            String str = list1.get(i);
+            if (list2.contains(str)) 
+            {
+                list1.remove(str);
+                list2.remove(str);
+                System.out.println("match " + (i + 1) + " - " + str);
+            }
+            else
+                System.out.println("==== miss " + (i + 1) + " - " + str);
+        }
+        System.out.println("==== left in a.txt ==== " + list1.size() + " - " + WebUtil.joinl(", ", list1));
+        System.out.println("==== left in b.txt ==== " + list2.size() + " - " + WebUtil.joinl(", ", list2));
     }
 }

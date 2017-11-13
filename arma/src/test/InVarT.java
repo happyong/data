@@ -12,4 +12,6 @@ public class InVarT
         "华盛顿", "纽约", "渥太华",
         "悉尼", "墨尔本", "惠灵顿",
         "开罗", "约翰内斯堡"};
+    public static final String file_1 = "D:\\etc\\中国军史人物.txt";
+    public static final String sep_1 = "、";
 }

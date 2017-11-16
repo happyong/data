@@ -112,7 +112,7 @@ public class PortalService extends AbstractBaseComponent
 				Locale newlocale = PortalUtil.parseLocale(locale);
 				if (newlocale == null) break;
 				request.getSession().setAttribute("locale", newlocale);
-				PortalUtil.setCookie("locale", locale, 7 * 86400, null, response);
+				PortalUtil.cookie("locale", locale, 7 * 86400, null, null, response);
 				result.put("result", true);
 			}
 			else if (supportedLocales.containsKey(locale))

@@ -167,8 +167,16 @@ public class InVarAM
 
 	public static final String s_sep1 = "、";
     public static final String s_sep2 = "(";
+    public static final String s_sep3 = ", ";
+    public static final String s_sep4 = "#";
 	
     public static final String[] s_coasts = new String[]{"海警", "海监", "渔政"};
+    public static final String[][] s_rockets = {
+        {"长征一号", "长征二号", "长征二号甲"}, 
+        {"长征二号丙", "长征二号丁", "长征三号", "长征二号捆"}, 
+        {"长征二号F", "长征三号甲", "长征三号乙", "长征三号丙", "长征四号甲", "长征四号乙", "长征四号丙"}, 
+        {"长征五号", "长征六号", "长征七号", "长征八号", "长征十一号"}
+    };
 
     public static final String[] s_fleet_seps = new String[]{"", "，", "-", "-", "", ""};
     public static final String[] s_fleet_tabs = new String[]{"num", "fleet，addr", "date1-date4", "date2-date3", "list", "info"};

@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.arma.web.service.TKmsDaoService;
+import com.arma.web.service.bean.TKnowledge;
 import com.arma.web.util.InVarAM;
 import com.neulion.iptv.web.GlobalCache;
 import com.neulion.iptv.web.util.DateUtil;
@@ -135,6 +136,55 @@ public class KmsUtil
         }
         // if (tags.length() > 0) KmsHelper.newKmKey4Tags(2000, InVarAM.s_fleet_tag, false, tags.substring(InVarAM.s_sep1.length()));
         return true;
+    }
+    
+    public static boolean handleRocket()
+    {
+        TKmsDaoService dao = GlobalCache.getInstance().getBean(TKmsDaoService.class);
+        List<TKnowledge> list = dao.getKnowledges("ckey_id=150");
+        Map<Integer, List<Integer>> map = new HashMap<Integer, List<Integer>>();
+        for (TKnowledge bean : list)
+        {
+            String context = bean.getContent();
+            int pos1 = context.indexOf(InVarAM.s_sep3), pos2 = context.indexOf(InVarAM.s_sep4);
+            if (pos1 < 1 || pos2 < pos1) continue;
+            String key = context.substring(pos1 + 1, pos2).trim();
+            int gen = gen(key);
+            List<Integer> list2 = map.get(gen);
+            if (list2 == null)
+            {
+                list2 = new ArrayList<Integer>();
+                map.put(gen,  list2);
+            }
+            list2.add(bean.getKmId());
+        }
+        List<Integer> list2 = map.get(0);
+        if (list2 != null && list2.size() > 0) return false;
+        
+        List<Map<String, Object>> params = WebUtil.params(null);
+        for (int gen : map.keySet()) update(gen, map.get(gen), params);
+        dao.batchUpdate("update t_knowledge set km_id=:nkmid where km_id=:okmid", params);
+        dao.batchUpdate("update t_knowkey set km_id=:nkmid where km_id=:okmid", params);
+        dao.batchUpdate("update t_knowledge set km_id=km_id+1490000 where km_id<20000", null);
+        dao.batchUpdate("update t_knowkey set km_id=km_id+1490000 where km_id<20000", null);
+        return true;
+    }    
+
+    private static void update(int gen, List<Integer> list, List<Map<String, Object>> params)
+    {
+        int sz = (list == null ? 0 : list.size());
+        for (int i = 0; i < sz; i++)
+        {
+            Map<String, Object> map = WebUtil.param("okmid", list.get(i));
+            map.put("nkmid",10000 + gen * 1000 + 101 + i);
+            params.add(map);
+        }
+    }
+    
+    private static int gen(String key)
+    {
+        for (int i = 0; i < InVarAM.s_rockets.length; i++) if (WebUtil.pos(key, InVarAM.s_rockets[i]) != -1) return (i + 1);
+        return 0;
     }
     
     public static boolean handleKeyVal(String param)

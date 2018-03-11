@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.arma.web.service.bean.TFinance;
 import com.arma.web.service.bean.TKeyenum;
 import com.arma.web.service.bean.TKeyrank;
 import com.arma.web.service.bean.TKeytype;
@@ -492,4 +493,61 @@ public class TKmsDaoService extends BaseDaoService
         if (idBase < 1 || WebUtil.empty(tbl)) return 0;
         return count(batchUpdate("alter table " + tbl + " auto_increment=" + idBase, null));
     }
+
+    // year, gdp, population, agdp, outlaysTotal, outlaysCentral, defenseTotal, defenseCentral, usaGdp, usaPopulation, usaAgdp, usaOutlaysTotal, usaDefenseTotal, exchangeUsd
+    public boolean insertFinance(TFinance bean)
+    {
+        if (bean == null || bean.empty()) return true;
+        return insertFinances(WebUtil.params(bean.toDbMap()));
+    }
+    public boolean insertFinances(List<Map<String, Object>> params)
+    {
+        if (params == null || params.size() < 1) return true;
+        int[] rets = batchUpdate(insert_t_finance, params);
+        return (rets != null);
+    }
+    private static final String insert_t_finance = "insert into t_finance (year, gdp, population, agdp, outlays_total, outlays_central, defense_total, defense_central, usa_gdp, usa_population, usa_agdp, usa_outlays_total, usa_defense_total, exchange_usd) values (:year, :gdp, :population, :agdp, :outlaysTotal, :outlaysCentral, :defenseTotal, :defenseCentral, :usaGdp, :usaPopulation, :usaAgdp, :usaOutlaysTotal, :usaDefenseTotal, :exchangeUsd) ";
+
+    // year, gdp, population, agdp, outlaysTotal, outlaysCentral, defenseTotal, defenseCentral, usaGdp, usaPopulation, usaAgdp, usaOutlaysTotal, usaDefenseTotal, exchangeUsd
+    public boolean updateFinance(TFinance bean)
+    {
+        if (bean == null || bean.empty()) return true;
+        return updateFinances(WebUtil.params(bean.toDbMap()));
+    }
+    public boolean updateFinances(List<Map<String, Object>> params)
+    {
+        if (params == null || params.size() < 1) return true;
+        int[] rets = batchUpdate(update_t_finance, params);
+        return (rets != null);
+    }
+    private static final String update_t_finance = "update t_finance set year=:year, gdp=:gdp, population=:population, agdp=:agdp, outlays_total=:outlaysTotal, outlays_central=:outlaysCentral, defense_total=:defenseTotal, defense_central=:defenseCentral, usa_gdp=:usaGdp, usa_population=:usaPopulation, usa_agdp=:usaAgdp, usa_outlays_total=:usaOutlaysTotal, usa_defense_total=:usaDefenseTotal, exchange_usd=:exchangeUsd where id=:id ";
+
+    public boolean deleteFinance(int id)
+    {
+        if (id < 1) return true;
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("id", id);
+        return deleteFinances(WebUtil.params(map));
+    }
+    public boolean deleteFinances(List<Map<String, Object>> params)
+    {
+        if (params == null || params.size() < 1) return true;
+        int[] rets = batchUpdate(delete_t_finance, params);
+        return (rets != null);
+    }
+    private static final String delete_t_finance = "delete from t_finance where id=:id ";
+
+    // year, gdp, population, agdp, outlaysTotal, outlaysCentral, defenseTotal, defenseCentral, usaGdp, usaPopulation, usaAgdp, usaOutlaysTotal, usaDefenseTotal, exchangeUsd
+    public List<TFinance> getFinances(String cond)
+    {
+        List<TFinance> list = new ArrayList<TFinance>();
+        String sql = select_t_finance;
+        if (WebUtil.empty(cond)) cond = "1=1 order by year";
+        sql = WebUtil.substituteParam("cond", cond, sql);
+        List<Map<String, Object>> results = query(sql);
+        for (Map<String, Object> result : results) list.add(new TFinance().fromDbMap(TFinance.class, result));
+        return list;
+    }
+    private static final String select_t_finance = "select id as id, year as year, gdp as gdp, population as population, agdp as agdp, outlays_total as outlaysTotal, outlays_central as outlaysCentral, defense_total as defenseTotal, defense_central as defenseCentral, usa_gdp as usaGdp, usa_population as usaPopulation, usa_agdp as usaAgdp, usa_outlays_total as usaOutlaysTotal, usa_defense_total as usaDefenseTotal, exchange_usd as exchangeUsd from t_finance where ${cond} ";
+
 }

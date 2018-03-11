@@ -1,4 +1,4 @@
-﻿/*
+/*
 SQLyog Community v9.51 
 MySQL - 5.5.27 : Database - arma_kms
 *********************************************************************
@@ -192,6 +192,30 @@ CREATE TABLE `t_knowkey` (
   KEY `IX_KK2` (`KEY_ID`) USING BTREE,
   FULLTEXT (`KEY_VAL`)
 ) ENGINE=MYISAM DEFAULT CHARSET=utf8;*/
+
+/*Table structure for table `t_finance` */
+
+DROP TABLE IF EXISTS `t_finance`;
+
+CREATE TABLE `t_finance` (  
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `YEAR` int(11) NOT NULL,
+  `GDP` decimal(10,2) NOT NULL DEFAULT '-1001.00',
+  `POPULATION` int(11) NOT NULL DEFAULT '-1001',
+  `AGDP` int(11) NOT NULL DEFAULT '-1001',
+  `OUTLAYS_TOTAL` decimal(10,2) NOT NULL DEFAULT '-1001.00',
+  `OUTLAYS_CENTRAL` decimal(10,2) NOT NULL DEFAULT '-1001.00',
+  `DEFENSE_TOTAL` decimal(10,2) NOT NULL DEFAULT '-1001.00',
+  `DEFENSE_CENTRAL` decimal(10,2) NOT NULL DEFAULT '-1001.00',
+  `USA_GDP` decimal(10,2) NOT NULL DEFAULT '-1001.00',
+  `USA_POPULATION` int(11) NOT NULL DEFAULT '-1001',
+  `USA_AGDP` int(11) NOT NULL DEFAULT '-1001',
+  `USA_OUTLAYS_TOTAL` decimal(10,2) NOT NULL DEFAULT '-1001.00',
+  `USA_DEFENSE_TOTAL` decimal(10,2) NOT NULL DEFAULT '-1001.00',
+  `EXCHANGE_USD` decimal(10,4) NOT NULL DEFAULT '-1001.0000',
+  PRIMARY KEY (`ID`),
+  UNIQUE KEY `IX_FIN1` (`YEAR`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;

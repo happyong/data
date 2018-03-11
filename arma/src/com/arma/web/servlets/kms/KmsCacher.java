@@ -20,6 +20,7 @@ import com.arma.web.service.bean.TKeyenum;
 import com.arma.web.service.bean.TKeyrank;
 import com.arma.web.service.bean.TKeytype;
 import com.arma.web.service.bean.TKeyword;
+import com.arma.web.servlets.kms.bean.Keyword;
 import com.neulion.iptv.web.GlobalCache;
 import com.neulion.iptv.web.util.DateUtil;
 import com.neulion.iptv.web.util.WebUtil;

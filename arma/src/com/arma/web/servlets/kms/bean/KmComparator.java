@@ -1,10 +1,12 @@
 /*
  * Copyright (c) 2015 ARMA, Inc. All Rights Reserved.
  */
-package com.arma.web.servlets.kms;
+package com.arma.web.servlets.kms.bean;
 
 import java.util.Comparator;
 
+import com.arma.web.servlets.kms.KmsHelper;
+import com.arma.web.servlets.kms.Knowledge;
 import com.neulion.iptv.web.util.DateUtil;
 import com.neulion.iptv.web.util.WebUtil;
 

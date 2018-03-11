@@ -6,6 +6,7 @@ encoding//src/com/arma/web/service/bean/TSymbol.java=UTF-8
 encoding//src/com/arma/web/servlets/fund/FundComparator.java=UTF-8
 encoding//src/com/arma/web/servlets/fund/FundRtStats.java=UTF-8
 encoding//src/com/arma/web/servlets/fund/FundSpider.java=UTF-8
+encoding//src/com/arma/web/servlets/kms/bean/Finance.java=UTF-8
 encoding//src/com/arma/web/util/InVarAM.java=UTF-8
 encoding//src/com/arma/web/util/WebMain.java=UTF-8
 encoding//src/com/arma/web/util/WordSkyMain.java=UTF-8

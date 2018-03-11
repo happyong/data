@@ -11,7 +11,9 @@ import java.util.List;
 import java.util.Map;
 
 import com.arma.web.service.TKmsDaoService;
+import com.arma.web.service.bean.TFinance;
 import com.arma.web.service.bean.TKnowledge;
+import com.arma.web.servlets.kms.bean.Finance;
 import com.arma.web.util.InVarAM;
 import com.neulion.iptv.web.GlobalCache;
 import com.neulion.iptv.web.util.DateUtil;
@@ -361,6 +363,22 @@ public class KmsUtil
         for (int i = min; i <= max; i++) dao.batchUpdate(sql + " values (" + i + ", " + kmid + ", 2000, '', '" + now + "')", null);
         KmsHelper.fmtkkids(kmid, kmid, deta, dao);
         dao.batchUpdate("delete from t_knowkey where km_id=" + kmid + " and update_date='" + now + "'", null);
+        return true;
+    }
+
+    public static boolean handleFinance(int type)
+    {
+        Finance last = null;
+        List<String> lines = new ArrayList<String>();
+        List<TFinance> list = GlobalCache.getInstance().getBean(TKmsDaoService.class).getFinances(null);
+        for (TFinance bean : list)
+        {
+            Finance cur = new Finance(bean);
+            cur.stat(last);
+            lines.add(0, cur.toText(type));
+            last = cur;
+        }
+        FileUtil2.writeLines(lines, "arma.finance" + type + ".txt", null, WebUtil.LINE_WIN, new File("c:"));
         return true;
     }
 }

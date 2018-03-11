@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.arma.web.service.bean.TKnowledge;
+import com.arma.web.servlets.kms.bean.Keyword;
+import com.arma.web.servlets.kms.bean.KmsCond;
 import com.neulion.iptv.web.servlets.AbstractBaseComponent;
 import com.neulion.iptv.web.servlets.PortalUtil;
 import com.neulion.iptv.web.util.DateUtil;
@@ -250,6 +252,7 @@ public class KmsService extends AbstractBaseComponent
             else if (method.startsWith("keyval::")) map.put("result", KmsUtil.handleKeyVal(method.substring(8)));
             else if ("vote".equals(method)) map.put("result", KmsUtil.handleVote());
             else if (method.startsWith("tkktest")) map.put("result", KmsUtil.handleTkkTest(WebUtil.str2int(method.substring(7))));
+            else if (method.startsWith("finance")) map.put("result", KmsUtil.handleFinance(WebUtil.str2int(method.substring(7))));
         }
 		
 		if ((Boolean)map.get("result") && !json && usexop) map.put("bodyXml", xop.output());

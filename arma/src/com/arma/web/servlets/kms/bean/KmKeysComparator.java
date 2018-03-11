@@ -1,11 +1,12 @@
 /*
  * Copyright (c) 2015 ARMA, Inc. All Rights Reserved.
  */
-package com.arma.web.servlets.kms;
+package com.arma.web.servlets.kms.bean;
 
 import java.util.Comparator;
 
 import com.arma.web.service.bean.TKnowkey;
+import com.arma.web.servlets.kms.KmsHelper;
 import com.neulion.iptv.web.util.WebUtil;
 
 public class KmKeysComparator implements Comparator<TKnowkey>

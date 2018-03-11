@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.arma.web.service.bean.TKnowkey;
 import com.arma.web.service.bean.TKnowledge;
+import com.arma.web.servlets.kms.bean.Keyword;
+import com.arma.web.servlets.kms.bean.KmKeysComparator;
 import com.neulion.iptv.web.util.WebUtil;
 
 public class Knowledge

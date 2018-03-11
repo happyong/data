@@ -1,10 +1,12 @@
 /*
  * Copyright (c) 2015 ARMA, Inc. All Rights Reserved.
  */
-package com.arma.web.servlets.kms;
+package com.arma.web.servlets.kms.bean;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import com.arma.web.servlets.kms.KmsHelper;
 
 public class KmsIdBuilder
 {

@@ -61,38 +61,38 @@ public class TFinance extends BaseDaoBean
 		if (dbmap == null || dbmap.size() == 0) return (T)this;
 		id = WebUtil.obj2int(dbmap.get("id"));
 		year = WebUtil.obj2int(dbmap.get("year"));
-		gdp = WebUtil.s2d_0000(dbmap.get("gdp"));
+		gdp = WebUtil.obj2double(dbmap.get("gdp"));
 		population = WebUtil.obj2int(dbmap.get("population"));
 		agdp = WebUtil.obj2int(dbmap.get("agdp"));
-		outlaysTotal = WebUtil.s2d_0000(dbmap.get("outlaysTotal"));
-		outlaysCentral = WebUtil.s2d_0000(dbmap.get("outlaysCentral"));
-		defenseTotal = WebUtil.s2d_0000(dbmap.get("defenseTotal"));
-		defenseCentral = WebUtil.s2d_0000(dbmap.get("defenseCentral"));
-		usaGdp = WebUtil.s2d_0000(dbmap.get("usaGdp"));
+		outlaysTotal = WebUtil.obj2double(dbmap.get("outlaysTotal"));
+		outlaysCentral = WebUtil.obj2double(dbmap.get("outlaysCentral"));
+		defenseTotal = WebUtil.obj2double(dbmap.get("defenseTotal"));
+		defenseCentral = WebUtil.obj2double(dbmap.get("defenseCentral"));
+		usaGdp = WebUtil.obj2double(dbmap.get("usaGdp"));
 		usaPopulation = WebUtil.obj2int(dbmap.get("usaPopulation"));
 		usaAgdp = WebUtil.obj2int(dbmap.get("usaAgdp"));
-		usaOutlaysTotal = WebUtil.s2d_0000(dbmap.get("usaOutlaysTotal"));
-		usaDefenseTotal = WebUtil.s2d_0000(dbmap.get("usaDefenseTotal"));
-		exchangeUsd = WebUtil.s2d_0000(dbmap.get("exchangeUsd"));
+		usaOutlaysTotal = WebUtil.obj2double(dbmap.get("usaOutlaysTotal"));
+		usaDefenseTotal = WebUtil.obj2double(dbmap.get("usaDefenseTotal"));
+		exchangeUsd = WebUtil.obj2double(dbmap.get("exchangeUsd"));
 		return (T)this;
 	}
 
 	public TFinance fromRequest(Node node, HttpServletRequest request)
 	{
 		year = WebUtil.obj2int(WebUtil.scan_str("year", node, request));
-		gdp = WebUtil.s2d_0000(WebUtil.scan_str("gdp", node, request));
+		gdp = WebUtil.obj2double(WebUtil.scan_str("gdp", node, request));
 		population = WebUtil.obj2int(WebUtil.scan_str("population", node, request));
 		agdp = WebUtil.obj2int(WebUtil.scan_str("agdp", node, request));
-		outlaysTotal = WebUtil.s2d_0000(WebUtil.scan_str("outlays_total", node, request));
-		outlaysCentral = WebUtil.s2d_0000(WebUtil.scan_str("outlays_central", node, request));
-		defenseTotal = WebUtil.s2d_0000(WebUtil.scan_str("defense_total", node, request));
-		defenseCentral = WebUtil.s2d_0000(WebUtil.scan_str("defense_central", node, request));
-		usaGdp = WebUtil.s2d_0000(WebUtil.scan_str("usa_gdp", node, request));
+		outlaysTotal = WebUtil.obj2double(WebUtil.scan_str("outlays_total", node, request));
+		outlaysCentral = WebUtil.obj2double(WebUtil.scan_str("outlays_central", node, request));
+		defenseTotal = WebUtil.obj2double(WebUtil.scan_str("defense_total", node, request));
+		defenseCentral = WebUtil.obj2double(WebUtil.scan_str("defense_central", node, request));
+		usaGdp = WebUtil.obj2double(WebUtil.scan_str("usa_gdp", node, request));
 		usaPopulation = WebUtil.obj2int(WebUtil.scan_str("usa_population", node, request));
 		usaAgdp = WebUtil.obj2int(WebUtil.scan_str("usa_agdp", node, request));
-		usaOutlaysTotal = WebUtil.s2d_0000(WebUtil.scan_str("usa_outlays_total", node, request));
-		usaDefenseTotal = WebUtil.s2d_0000(WebUtil.scan_str("usa_defense_total", node, request));
-		exchangeUsd = WebUtil.s2d_0000(WebUtil.scan_str("exchange_usd", node, request));
+		usaOutlaysTotal = WebUtil.obj2double(WebUtil.scan_str("usa_outlays_total", node, request));
+		usaDefenseTotal = WebUtil.obj2double(WebUtil.scan_str("usa_defense_total", node, request));
+		exchangeUsd = WebUtil.obj2double(WebUtil.scan_str("exchange_usd", node, request));
 		return this;
 	}
 
@@ -120,7 +120,9 @@ public class TFinance extends BaseDaoBean
 	@Override
 	public String toText()
 	{
-		return (id + "|" + year + "|" + gdp + "|" + population + "|" + agdp + "|" + outlaysTotal + "|" + outlaysCentral + "|" + defenseTotal + "|" + defenseCentral + "|" + usaGdp + "|" + usaPopulation + "|" + usaAgdp + "|" + usaOutlaysTotal + "|" + usaDefenseTotal + "|" + exchangeUsd);
+		return (id + "|" + year + "|" + WebUtil.d2s(2, gdp) + "|" + population + "|" + agdp + "|" + WebUtil.d2s(2, outlaysTotal) + "|" + WebUtil.d2s(2, outlaysCentral) + "|" + 
+		        WebUtil.d2s(2, defenseTotal) + "|" + WebUtil.d2s(2, defenseCentral) + "|" + WebUtil.d2s(2, usaGdp) + "|" + usaPopulation + "|" + usaAgdp + "|" + 
+		        WebUtil.d2s(2, usaOutlaysTotal) + "|" + WebUtil.d2s(2, usaDefenseTotal) + "|" + WebUtil.d2s(4, exchangeUsd));
 	}
 
 	public boolean empty()
@@ -130,7 +132,10 @@ public class TFinance extends BaseDaoBean
 
 	public void append(boolean close, XmlOutput4j xop)
 	{
-		xop.openTag("finance", InVarKM.attrs_finance, new String[]{"" + getId(), "" + getYear(), "" + getGdp(), "" + getPopulation(), "" + getAgdp(), "" + getOutlaysTotal(), "" + getOutlaysCentral(), "" + getDefenseTotal(), "" + getDefenseCentral(), "" + getUsaGdp(), "" + getUsaPopulation(), "" + getUsaAgdp(), "" + getUsaOutlaysTotal(), "" + getUsaDefenseTotal(), "" + getExchangeUsd()});
+		xop.openTag("finance", InVarKM.attrs_finance, new String[]{"" + getId(), "" + getYear(), WebUtil.d2s(2, getGdp()), "" + getPopulation(), "" + getAgdp(), 
+		        WebUtil.d2s(2, getOutlaysTotal()), WebUtil.d2s(2, getOutlaysCentral()), WebUtil.d2s(2, getDefenseTotal()), WebUtil.d2s(2, getDefenseCentral()), 
+		        WebUtil.d2s(2, getUsaGdp()), "" + getUsaPopulation(), "" + getUsaAgdp(), WebUtil.d2s(2, getUsaOutlaysTotal()), WebUtil.d2s(2, getUsaDefenseTotal()), 
+		        WebUtil.d2s(4, getExchangeUsd())});
 		if (close) xop.closeTag();
 	}
 

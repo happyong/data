@@ -416,13 +416,13 @@ public class FundSpider
 		bean.setNameS(arr[0]);											// used for scan symbol only
 		bean.setDate(date == null ? arr[30] : date);
 		bean.setTime(date == null ? arr[31] : "15:34:03");
-		bean.setPrice(WebUtil.s2d_0000(arr[3]));
-		bean.setClosePrev(WebUtil.s2d_0000(arr[2]));
-		bean.setOpen(WebUtil.s2d_0000(arr[1]));
-		bean.setHigh(WebUtil.s2d_0000(arr[4]));
-		bean.setLow(WebUtil.s2d_0000(arr[5]));
-		bean.setVolume(WebUtil.d2d_0000(WebUtil.str2double(arr[8]) / 100d));
-		bean.setAmount(WebUtil.d2d_0000(WebUtil.str2double(arr[9]) / 10000d));
+		bean.setPrice(WebUtil.obj2double(arr[3]));
+		bean.setClosePrev(WebUtil.obj2double(arr[2]));
+		bean.setOpen(WebUtil.obj2double(arr[1]));
+		bean.setHigh(WebUtil.obj2double(arr[4]));
+		bean.setLow(WebUtil.obj2double(arr[5]));
+		bean.setVolume(WebUtil.str2double(arr[8]) / 100d);
+		bean.setAmount(WebUtil.str2double(arr[9]) / 10000d);
 		// not used - arr[6-7], arr[10-29]
 		return bean;
 	}
@@ -464,11 +464,11 @@ public class FundSpider
 		
 		bean.setCode(code);
 		bean.setDate(arr[4]);
-		double net = WebUtil.s2d_0000(arr[1]), net_prev = WebUtil.s2d_0000(arr[3]);
+		double net = WebUtil.obj2double(arr[1]), net_prev = WebUtil.obj2double(arr[3]);
 		bean.setNet(net);
-		bean.setNetTotal(WebUtil.s2d_0000(arr[2]));
-		bean.setGrowth(WebUtil.d2d_0000((net - net_prev) * 100d / net_prev));
-		// bean.setPremium(WebUtil.s2d_0000(arr[5])); 					// wrong value, not used
+		bean.setNetTotal(WebUtil.obj2double(arr[2]));
+		bean.setGrowth((net - net_prev) * 100d / net_prev);
+		// bean.setPremium(WebUtil.obj2double(arr[5])); 					// wrong value, not used
 		// not used - arr[0], arr[5]
 		return bean;
 	}

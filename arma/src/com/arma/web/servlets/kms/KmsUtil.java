@@ -256,7 +256,7 @@ public class KmsUtil
             }
             start++;
         }
-        map.put("num00", WebUtil.f2s00(map.get("num")));
+        map.put("num00", WebUtil.i2s(2, WebUtil.str2int(map.get("num"))));
         return map;
     }
     

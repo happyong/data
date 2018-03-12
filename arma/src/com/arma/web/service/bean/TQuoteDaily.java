@@ -61,16 +61,16 @@ public class TQuoteDaily extends BaseDaoBean
 		code = (String)dbmap.get("code");
 		date = (String)dbmap.get("date");
 		time = (String)dbmap.get("time");
-		price = WebUtil.s2d_0000(dbmap.get("price"));
-		closePrev = WebUtil.s2d_0000(dbmap.get("closePrev"));
-		open = WebUtil.s2d_0000(dbmap.get("open"));
-		high = WebUtil.s2d_0000(dbmap.get("high"));
-		low = WebUtil.s2d_0000(dbmap.get("low"));
-		volume = WebUtil.s2d_0000(dbmap.get("volume"));
-		amount = WebUtil.s2d_0000(dbmap.get("amount"));
-		high60 = WebUtil.s2d_0000(dbmap.get("high60"));
-		low60 = WebUtil.s2d_0000(dbmap.get("low60"));
-		volume60 = WebUtil.s2d_0000(dbmap.get("volume60"));
+		price = WebUtil.obj2double(dbmap.get("price"));
+		closePrev = WebUtil.obj2double(dbmap.get("closePrev"));
+		open = WebUtil.obj2double(dbmap.get("open"));
+		high = WebUtil.obj2double(dbmap.get("high"));
+		low = WebUtil.obj2double(dbmap.get("low"));
+		volume = WebUtil.obj2double(dbmap.get("volume"));
+		amount = WebUtil.obj2double(dbmap.get("amount"));
+		high60 = WebUtil.obj2double(dbmap.get("high60"));
+		low60 = WebUtil.obj2double(dbmap.get("low60"));
+		volume60 = WebUtil.obj2double(dbmap.get("volume60"));
 		return (T)this;
 	}
 
@@ -79,16 +79,16 @@ public class TQuoteDaily extends BaseDaoBean
 		code = WebUtil.scan_str("code", node, request);
 		date = WebUtil.scan_str("date", node, request);
 		time = WebUtil.scan_str("time", node, request);
-		price = WebUtil.s2d_0000(WebUtil.scan_str("price", node, request));
-		closePrev = WebUtil.s2d_0000(WebUtil.scan_str("closePrev", node, request));
-		open = WebUtil.s2d_0000(WebUtil.scan_str("open", node, request));
-		high = WebUtil.s2d_0000(WebUtil.scan_str("high", node, request));
-		low = WebUtil.s2d_0000(WebUtil.scan_str("low", node, request));
-		volume = WebUtil.s2d_0000(WebUtil.scan_str("volume", node, request));
-		amount = WebUtil.s2d_0000(WebUtil.scan_str("amount", node, request));
-		// high60 = WebUtil.s2d_0000(WebUtil.scan_str("high_60", node, request));
-		// low60 = WebUtil.s2d_0000(WebUtil.scan_str("low_60", node, request));
-		// volume60 = WebUtil.s2d_0000(WebUtil.scan_str("volume_60", node, request));
+		price = WebUtil.obj2double(WebUtil.scan_str("price", node, request));
+		closePrev = WebUtil.obj2double(WebUtil.scan_str("closePrev", node, request));
+		open = WebUtil.obj2double(WebUtil.scan_str("open", node, request));
+		high = WebUtil.obj2double(WebUtil.scan_str("high", node, request));
+		low = WebUtil.obj2double(WebUtil.scan_str("low", node, request));
+		volume = WebUtil.obj2double(WebUtil.scan_str("volume", node, request));
+		amount = WebUtil.obj2double(WebUtil.scan_str("amount", node, request));
+		// high60 = WebUtil.obj2double(WebUtil.scan_str("high_60", node, request));
+		// low60 = WebUtil.obj2double(WebUtil.scan_str("low_60", node, request));
+		// volume60 = WebUtil.obj2double(WebUtil.scan_str("volume_60", node, request));
 		return this;
 	}
 
@@ -182,8 +182,9 @@ public class TQuoteDaily extends BaseDaoBean
 
 	public String toText()
 	{
-		return (WebUtil.unull(code) + "|" + WebUtil.unull(date) + "|" + WebUtil.unull(time) + "|" + price + "|" + closePrev + "|" + open + "|" + high + "|" + low + "|" +
-				volume + "|" + amount + "|" + high60 + "|" + low60 + "|" + volume60);
+		return (WebUtil.unull(code) + "|" + WebUtil.unull(date) + "|" + WebUtil.unull(time) + "|" + WebUtil.d2s(4, price) + "|" + WebUtil.d2s(4, closePrev)
+		        + "|" + WebUtil.d2s(4, open) + "|" + WebUtil.d2s(4, high) + "|" + WebUtil.d2s(4, low) + "|" + WebUtil.d2s(4, volume)
+		        + "|" + WebUtil.d2s(4, amount) + "|" + WebUtil.d2s(4, high60) + "|" + WebUtil.d2s(4, low60) + "|" + WebUtil.d2s(4, volume60));
 	}
 
 	public boolean empty()

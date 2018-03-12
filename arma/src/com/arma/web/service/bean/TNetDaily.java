@@ -54,13 +54,13 @@ public class TNetDaily extends BaseDaoBean
 		id = WebUtil.obj2int(dbmap.get("id"));
 		code = (String)dbmap.get("code");
 		date = (String)dbmap.get("date");
-		net = WebUtil.s2d_0000(dbmap.get("net"));
-		netTotal = WebUtil.s2d_0000(dbmap.get("netTotal"));
-		growth = WebUtil.s2d_0000(dbmap.get("growth"));
-		premium = WebUtil.s2d_0000(dbmap.get("premium"));
-		premium2 = WebUtil.s2d_0000(dbmap.get("premium2"));
-		premiumHigh5 = WebUtil.s2d_0000(dbmap.get("premiumHigh5"));
-		premiumLow5 = WebUtil.s2d_0000(dbmap.get("premiumLow5"));
+		net = WebUtil.obj2double(dbmap.get("net"));
+		netTotal = WebUtil.obj2double(dbmap.get("netTotal"));
+		growth = WebUtil.obj2double(dbmap.get("growth"));
+		premium = WebUtil.obj2double(dbmap.get("premium"));
+		premium2 = WebUtil.obj2double(dbmap.get("premium2"));
+		premiumHigh5 = WebUtil.obj2double(dbmap.get("premiumHigh5"));
+		premiumLow5 = WebUtil.obj2double(dbmap.get("premiumLow5"));
 		return (T)this;
 	}
 
@@ -68,13 +68,13 @@ public class TNetDaily extends BaseDaoBean
 	{
 		code = WebUtil.scan_str("code", node, request);
 		date = WebUtil.scan_str("date", node, request);
-		net = WebUtil.s2d_0000(WebUtil.scan_str("net", node, request));
-		netTotal = WebUtil.s2d_0000(WebUtil.scan_str("net_total", node, request));
-		growth = WebUtil.s2d_0000(WebUtil.scan_str("growth", node, request));
-		// premium = WebUtil.s2d_0000(WebUtil.scan_str("premium", node, request));
-		// premium2 = WebUtil.s2d_0000(WebUtil.scan_str("premium2", node, request));
-		// premiumHigh5 = WebUtil.s2d_0000(WebUtil.scan_str("premium_high_5", node, request));
-		// premiumLow5 = WebUtil.s2d_0000(WebUtil.scan_str("premium_low_5", node, request));
+		net = WebUtil.obj2double(WebUtil.scan_str("net", node, request));
+		netTotal = WebUtil.obj2double(WebUtil.scan_str("net_total", node, request));
+		growth = WebUtil.obj2double(WebUtil.scan_str("growth", node, request));
+		// premium = WebUtil.obj2double(WebUtil.scan_str("premium", node, request));
+		// premium2 = WebUtil.obj2double(WebUtil.scan_str("premium2", node, request));
+		// premiumHigh5 = WebUtil.obj2double(WebUtil.scan_str("premium_high_5", node, request));
+		// premiumLow5 = WebUtil.obj2double(WebUtil.scan_str("premium_low_5", node, request));
 		return this;
 	}
 
@@ -161,12 +161,13 @@ public class TNetDaily extends BaseDaoBean
 
 	public String toText()
 	{
-		return (WebUtil.unull(code) + "|" + toTextS() + "|" + netTotal + "|" + premium + "|" + premium2 + "|" + premiumHigh5 + "|" + premiumLow5);
+		return (WebUtil.unull(code) + "|" + toTextS() + "|" + WebUtil.d2s(4, netTotal) + "|" + WebUtil.d2s(4, premium) + "|" + 
+		        WebUtil.d2s(4, premium2) + "|" + WebUtil.d2s(4, premiumHigh5) + "|" + WebUtil.d2s(4, premiumLow5));
 	}
 
 	public String toTextS()
 	{
-		return (WebUtil.unull(date) + "|" + net + "|" + growth);
+		return (WebUtil.unull(date) + "|" + WebUtil.d2s(4, net) + "|" + WebUtil.d2s(4, growth));
 	}
 
 	public boolean empty()

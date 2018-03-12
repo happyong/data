@@ -41,7 +41,7 @@ public class WebMain
             int cur = (last == null ? 1 : last.intValue() + 1);
             urls.put(key, cur);
             String url0 = url + uri;
-            String name = "历史" + key + WebUtil.f2s000(cur) + " " + all.substring(pos4 + key3.length()) + ".jpg";
+            String name = "历史" + key + WebUtil.i2s(3, cur) + " " + all.substring(pos4 + key3.length()) + ".jpg";
             if (!new File(dir + name).exists())
                 HttpUtil.url2file(null, dir + name, HttpUtil.connect(url0, null, null), null);
             pos1 = text.indexOf(key1, pos2);

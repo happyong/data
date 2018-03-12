@@ -63,7 +63,7 @@ public class TSymbol extends BaseDaoBean
 		nameS = (String)dbmap.get("nameS");
 		market = (String)dbmap.get("market");
 		type = WebUtil.obj2int(dbmap.get("type"));
-		equity = WebUtil.s2d_0000(dbmap.get("equity"));
+		equity = WebUtil.obj2double(dbmap.get("equity"));
 		manager = (String)dbmap.get("manager");
 		startDate = (String)dbmap.get("startDate");
 		endDate = (String)dbmap.get("endDate");
@@ -84,7 +84,7 @@ public class TSymbol extends BaseDaoBean
 		nameS = WebUtil.scan_str("name_s" + i, node, request);
 		market = WebUtil.scan_str("market" + i, node, request);
 		type = WebUtil.obj2int(WebUtil.scan_str("type" + i, node, request));
-		equity = WebUtil.s2d_0000(WebUtil.scan_str("equity" + i, node, request));
+		equity = WebUtil.obj2double(WebUtil.scan_str("equity" + i, node, request));
 		manager = WebUtil.scan_str("manager" + i, node, request);
 		startDate = WebUtil.scan_str("start_date" + i, node, request);
 		endDate = WebUtil.scan_str("end_date" + i, node, request);
@@ -233,7 +233,8 @@ public class TSymbol extends BaseDaoBean
 
 	public String toTextS()
 	{
-		return (WebUtil.unull(code) + "|" + WebUtil.unull(nameS) + "|" + toTextAbm() + "|" + WebUtil.unull(startDate) + "|" + WebUtil.unull(name) + "|" + equity + "|" + WebUtil.unull(manager));
+		return (WebUtil.unull(code) + "|" + WebUtil.unull(nameS) + "|" + toTextAbm() + "|" + WebUtil.unull(startDate) + "|" + WebUtil.unull(name)
+		        + "|" + WebUtil.d2s(4, equity) + "|" + WebUtil.unull(manager));
 	}
 	
 	public String toTextAbm()

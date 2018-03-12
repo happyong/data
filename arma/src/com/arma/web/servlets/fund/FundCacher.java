@@ -378,7 +378,7 @@ public class FundCacher
 			count++;
 			v60 += bean.getVolume();
 		}
-		v60 = WebUtil.d2d_0000(count == 0 ? -1d : v60 / count);
+		v60 = (count == 0 ? -1d : v60 / count);
 		boolean success = quote_daily.normalize(h60, l60, v60);
 		if (success) 
 		{
@@ -526,13 +526,13 @@ public class FundCacher
 			TQuoteDaily quote_daily_a = _quotes_daily.get(symbol.code(0));
 			TQuoteDaily quote_daily_b = _quotes_daily.get(symbol.code(1));
 			if (quote_daily_a != null && quote_daily_b != null) 
-				return WebUtil.d2d_0000((price(type, quote_daily_a, quote_rt_a) + price(type, quote_daily_b, quote_rt_b) - net * 2d) * 50d / net);
+				return (price(type, quote_daily_a, quote_rt_a) + price(type, quote_daily_b, quote_rt_b) - net * 2d) * 50d / net;
 		}
 		else
 		{
 			TQuoteDaily quote_daily = _quotes_daily.get(symbol.getCode());
 			TQuoteDaily quote_rt = (quote_rt_a != null && quote_rt_a.key(null).startsWith(symbol.getCode()) ? quote_rt_a : quote_rt_b);
-			if (quote_daily != null) return WebUtil.d2d_0000((price(type, quote_daily, quote_rt) - net) * 100d / net);
+			if (quote_daily != null) return (price(type, quote_daily, quote_rt) - net) * 100d / net;
 		}
 		return -200d;
 	}
@@ -712,8 +712,8 @@ public class FundCacher
 			if (sort_type == 201 || sort_type == 211) ret = comparte(stat1.getPrice(), stat2.getPrice());
 			else if (sort_type == 202 || sort_type == 212) 
 			{
-				double growth1 = (stat1.getClosePrev() < 0.0001d ? -110d : WebUtil.d2d_00((stat1.getPrice() - stat1.getClosePrev()) * 100d / stat1.getClosePrev()));
-				double growth2 = (stat2.getClosePrev() < 0.0001d ? -110d : WebUtil.d2d_00((stat2.getPrice() - stat2.getClosePrev()) * 100d / stat2.getClosePrev()));
+				double growth1 = (stat1.getClosePrev() < 0.0001d ? -110d : (stat1.getPrice() - stat1.getClosePrev()) * 100d / stat1.getClosePrev());
+				double growth2 = (stat2.getClosePrev() < 0.0001d ? -110d : (stat2.getPrice() - stat2.getClosePrev()) * 100d / stat2.getClosePrev());
 				ret = comparte2(growth1, growth2);
 			}
 			else if (sort_type == 203 || sort_type == 213) ret = comparte(stat1.getAmount(), stat2.getAmount());
@@ -817,38 +817,41 @@ public class FundCacher
 		long from_m = DateUtil.str2min(InVarAM.s_trade_times[1]), to_m = DateUtil.str2min(InVarAM.s_trade_times[2]);
 		long from_a = DateUtil.str2min(InVarAM.s_trade_times[3]), to_a = DateUtil.str2min(InVarAM.s_trade_times[4]);
 		int min_m = (int)((to_m - from_m) / 60000L) + 1, min_a = (int)((to_a - from_a) / 60000L) + 1;
-		xop.openTag("fund", InVarAM.attrs_rtstats_base, new String[]{s1.getCode(), "" + s1.getEquity(), s1.getManager(), s1.getStartDate(), s1.getEndDate()});
+		xop.openTag("fund", InVarAM.attrs_rtstats_base, new String[]{s1.getCode(), WebUtil.d2s(4, s1.getEquity()), s1.getManager(), s1.getStartDate(), s1.getEndDate()});
 		for (int i = 0; i < InVarAM.s_names.length; i++)
 		{
 			stat = arr_stat[i];
 			// "minute", "growth", "price", "closePrev", "open", "high", "low", "high60", "low60", "volume"
-			double growth = (i == 2 ||  stat.getClosePrev() < 0.0001d ? 0.00d : WebUtil.d2d_00((stat.getPrice() - stat.getClosePrev()) * 100d / stat.getClosePrev()));
+			double growth = (i == 2 ||  stat.getClosePrev() < 0.0001d ? 0.00d : (stat.getPrice() - stat.getClosePrev()) * 100d / stat.getClosePrev());
 			quoteMin = (i == 2 ? null : stat.getDateQuote() + ", " + stat.getMinute());
-			quote = (i == 2 ? null : (type == 1 ? quoteMin + ", " : "") + growth + ", " + stat.getPrice() + ", " + stat.getClosePrev() + ", " + stat.getOpen() + ", " + 
-					stat.getHigh() + ", " + stat.getLow() + ", " + stat.getHigh60() + ", " + stat.getLow60() + ", " + stat.getVolume());
+			quote = (i == 2 ? null : (type == 1 ? quoteMin + ", " : "") + WebUtil.d2s(4, growth) + ", " + WebUtil.d2s(4, stat.getPrice()) + ", " + WebUtil.d2s(4, stat.getClosePrev())
+			        + ", " + WebUtil.d2s(4, stat.getOpen()) + ", " + WebUtil.d2s(4, stat.getHigh()) + ", " + WebUtil.d2s(4, stat.getLow()) + ", " + WebUtil.d2s(4, stat.getHigh60())
+			        + ", " + WebUtil.d2s(4, stat.getLow60()) + ", " + WebUtil.d2s(4, stat.getVolume()));
 			// "date", "net", "netTotal", "growth", "premium", "premium2", "premiumHigh5", "premiumLow5"
-			net = stat.getDate() + ", " + stat.getNet() + ", " + stat.getNetTotal() + ", " + stat.getGrowth() + ", " + stat.getPremium() + ", " + stat.getPremium2() + ", " + 
-					stat.getPremiumHigh5() + ", " + stat.getPremiumLow5();
+			net = stat.getDate() + ", " + WebUtil.d2s(4, stat.getNet()) + ", " + WebUtil.d2s(4, stat.getNetTotal()) + ", " + WebUtil.d2s(4, stat.getGrowth())
+			        + ", " + WebUtil.d2s(4, stat.getPremium()) + ", " + WebUtil.d2s(4, stat.getPremium2()) + ", " +	WebUtil.d2s(4, stat.getPremiumHigh5())
+			        + ", " + WebUtil.d2s(4, stat.getPremiumLow5());
 			xop.appendTag(false, "stat" + i, null, InVarAM.attrs_rtstats_detail, new String[]{arr_s[i].getCode(), arr_s[i].getName(), arr_s[i].getNameS(), "" + arr_s[i].getType(), 
-					"" + arr_s[i].getEquity(), quote, quoteMin, stat.getMinute0(), net, arr_s[i].hqlist(true)});
+					WebUtil.d2s(4, arr_s[i].getEquity()), quote, quoteMin, stat.getMinute0(), net, arr_s[i].hqlist(true)});
 			if (type == 1 && i > 0)
 			{
 				xop.openTag("net" + i, null, null);
 				for (TNetDaily bean : arr_nets[i]) xop.appendTag(false, "net", null, InVarAM.attrs_net, new String[]{"" + DateUtil.date2(bean.getDate()).getTime(), 
-						"" + bean.getNet(), "" + "" + bean.getGrowth(), "" + bean.getPremium(), "" + bean.getPremium2(),  "" + bean.getPremiumHigh5(), "" + bean.getPremiumLow5()});
+				        WebUtil.d2s(4, bean.getNet()), WebUtil.d2s(4, bean.getGrowth()), WebUtil.d2s(4, bean.getPremium()), WebUtil.d2s(4, bean.getPremium2()),  
+				        WebUtil.d2s(4, bean.getPremiumHigh5()), WebUtil.d2s(4, bean.getPremiumLow5())});
 				xop.closeTag();
 				xop.openTag("netm" + i, null, null);
 				for (int ii = 0; ii < min_m; ii++) 
 				{
 					stat2 = _rt_stats_min.get(stat.key(DateUtil.shiftMinute(ii, from_m)));
 					if (stat2 != null) xop.appendTag(false, "net", null, InVarAM.attrs_net_min, new String[]{"" + DateUtil.date(stat2.getDate() + " " + stat2.getMinute0() + ":00").getTime(), 
-							"" + stat2.getPremium(), "" + stat2.getPremium2(), "" + stat2.getPremiumHigh5(), "" + stat2.getPremiumLow5()});
+					        WebUtil.d2s(4, stat2.getPremium()), WebUtil.d2s(4, stat2.getPremium2()), WebUtil.d2s(4, stat2.getPremiumHigh5()), WebUtil.d2s(4, stat2.getPremiumLow5())});
 				}
 				for (int ii = 0; ii < min_a; ii++) 
 				{
 					stat2 = _rt_stats_min.get(stat.key(DateUtil.shiftMinute(ii, from_a)));
 					if (stat2 != null) xop.appendTag(false, "net", null, InVarAM.attrs_net_min, new String[]{"" + DateUtil.date(stat2.getDate() + " " + stat2.getMinute0() + ":00").getTime(), 
-							"" + stat2.getPremium(), "" + stat2.getPremium2(), "" + stat2.getPremiumHigh5(), "" + stat2.getPremiumLow5()});
+					        WebUtil.d2s(4, stat2.getPremium()), WebUtil.d2s(4, stat2.getPremium2()), WebUtil.d2s(4, stat2.getPremiumHigh5()), WebUtil.d2s(4, stat2.getPremiumLow5())});
 				}
 				xop.closeTag();
 			}
@@ -876,7 +879,7 @@ public class FundCacher
 		{
 			symbol =  _symbols.get(s1.code(i));
 			xop.appendTag(false, "symbol" + i, null, InVarAM.attrs_symbol, new String[]{symbol.getCode(), symbol.getName(), symbol.getNameS(), symbol.getMarket(), 
-					"" + symbol.getType(), "" + symbol.getEquity(), symbol.getManager(), symbol.getStartDate(), symbol.getEndDate()});
+					"" + symbol.getType(), WebUtil.d2s(4, symbol.getEquity()), symbol.getManager(), symbol.getStartDate(), symbol.getEndDate()});
 		}
 		xop.closeTag();
 	}
@@ -914,8 +917,8 @@ public class FundCacher
 			{
 				if (!s1.code(i).equals(quote_daily.getCode())) continue;
 				xop.appendTag(false, "quote" + i, null, InVarAM.attrs_quoteDaily, new String[]{quote_daily.getCode(), quote_daily.getDate(), quote_daily.getTime(), 
-						"" + quote_daily.getPrice(), "" + quote_daily.getClosePrev(), "" + quote_daily.getOpen(), "" + quote_daily.getHigh(), "" + quote_daily.getLow(), 
-						"" + quote_daily.getVolume(), "" + quote_daily.getAmount()});
+				        WebUtil.d2s(4, quote_daily.getPrice()), WebUtil.d2s(4, quote_daily.getClosePrev()), WebUtil.d2s(4, quote_daily.getOpen()), WebUtil.d2s(4, quote_daily.getHigh()), 
+				        WebUtil.d2s(4, quote_daily.getLow()), WebUtil.d2s(4, quote_daily.getVolume()), WebUtil.d2s(4, quote_daily.getAmount())});
 				break;
 			}
 		}
@@ -958,8 +961,8 @@ public class FundCacher
 			for (TNetDaily net_daily : nets_daily)
 			{
 				if (!s1.code(i).equals(net_daily.getCode())) continue;
-				xop.appendTag(false, "net" + i, null, InVarAM.attrs_netDaily, new String[]{net_daily.getCode(), net_daily.getDate(), "" + net_daily.getNet(), 
-						"" + net_daily.getNetTotal(), "" + net_daily.getGrowth()});
+				xop.appendTag(false, "net" + i, null, InVarAM.attrs_netDaily, new String[]{net_daily.getCode(), net_daily.getDate(), WebUtil.d2s(4, net_daily.getNet()), 
+				        WebUtil.d2s(4, net_daily.getNetTotal()), WebUtil.d2s(4, net_daily.getGrowth())});
 				break;
 			}
 		}

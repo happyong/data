@@ -129,7 +129,7 @@ public class FileSkyMeta
 			return level + name0.substring(level0.length(), name0.length() - ext.length()) + ext;
 		}
 		metas.put(key, val);
-		return level + WebUtil.f2s000(val) + ext;
+		return level + WebUtil.i2s(3, val) + ext;
 	}
 	
 	private String md5file(String name)

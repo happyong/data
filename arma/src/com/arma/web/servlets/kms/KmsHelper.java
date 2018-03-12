@@ -564,7 +564,7 @@ public class KmsHelper
             TKmsDaoService dao = GlobalCache.getInstance().getBean(TKmsDaoService.class);
             List<Integer> kmIds = dao.getKmIds(ckeyId, "tkk.key_id=1503 and tkk.key_val='" + rtype + "'");
             kmIds = and(kmIds, dao.getKmIds(ckeyId, "tkk.key_id=1501 and tkk.key_val<'" + rtime + "'"));
-            content = (WebUtil.empty(raddr) ? "" : raddr + ", ") + rtype + "#" + WebUtil.f2s000(kmIds.size() + 1);
+            content = (WebUtil.empty(raddr) ? "" : raddr + ", ") + rtype + "#" + WebUtil.i2s(4, kmIds.size() + 1);
         }
         return content;
     }

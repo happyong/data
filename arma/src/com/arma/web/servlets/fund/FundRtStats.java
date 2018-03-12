@@ -119,8 +119,9 @@ public class FundRtStats extends TNetDaily
 
 	public String toText()
 	{
-		return (super.toText()+ "|" + WebUtil.unull(dateQuote) + "|" + WebUtil.unull(minute) + "|" + price + "|" + closePrev + "|" + open + "|" + high + "|" + low + "|" + 
-				volume + "|" + amount + "|" + high60 + "|" + low60 + "|" + volume60);
+		return (super.toText()+ "|" + WebUtil.unull(dateQuote) + "|" + WebUtil.unull(minute) + "|" + WebUtil.d2s(4, price) + "|" + WebUtil.d2s(4, closePrev)
+		        + "|" + WebUtil.d2s(4, open) + "|" + WebUtil.d2s(4, high) + "|" + WebUtil.d2s(4, low) + "|" + WebUtil.d2s(4, volume) + "|" + WebUtil.d2s(4, amount)
+		        + "|" + WebUtil.d2s(4, high60) + "|" + WebUtil.d2s(4, low60) + "|" + WebUtil.d2s(4, volume60));
 	}
 
 	public boolean empty()

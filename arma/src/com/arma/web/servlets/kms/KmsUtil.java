@@ -5,6 +5,7 @@ package com.arma.web.servlets.kms;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -137,6 +138,26 @@ public class KmsUtil
             if (update) dao.updateKnowkeys(list);
         }
         // if (tags.length() > 0) KmsHelper.newKmKey4Tags(2000, InVarAM.s_fleet_tag, false, tags.substring(InVarAM.s_sep1.length()));
+        return true;
+    }
+    
+    public static boolean handleDate()
+    {
+        List<String> lines = FileUtil2.readLines("arma.date.txt", null, new File("c:")), lines2 = new ArrayList<String>();
+        if (lines == null || lines.size() < 1) return false;
+        
+        for (int i = 0; i < lines.size(); i++)
+        {
+            String line = lines.get(i).trim();
+            if (line.length() < 12 || !Character.isDigit(line.charAt(0))) continue;
+            lines2.add(line);
+        }
+        Collections.sort(lines2);
+        lines.clear();
+        for (String line : lines2)
+            lines.add(0, "    " + line);
+        lines.add(0, "");
+        FileUtil2.writeLines(lines, "arma.date2.txt", null, WebUtil.LINE_WIN, new File("c:"));
         return true;
     }
     

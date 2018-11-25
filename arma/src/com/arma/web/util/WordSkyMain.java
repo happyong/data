@@ -13,7 +13,6 @@ import java.util.regex.Pattern;
 
 import org.apache.log4j.Logger;
 
-import com.arma.web.FundMain;
 import com.neulion.iptv.web.util.DateUtil;
 import com.neulion.iptv.web.util.FileUtil2;
 import com.neulion.iptv.web.util.WebUtil;
@@ -30,42 +29,46 @@ public class WordSkyMain
 
     public static void main(final String[] args)
     {
-        FundMain.config();
-        if (!file.exists()) file = new File("D:/etc/中国军史人物.txt");
-        
+        ArmaUtil.config();
+        if (!file.exists())
+            file = new File("D:/etc/中国军史人物.txt");
+
         dotext();
         // test1();
         // testblank();
         // testdate1();
         // testdate2();
     }
-    
+
     private static List<String> lines;
     private static File file = new File("F:/etc/中国军史人物.txt");
+
     protected static void dotext()
     {
-        if (!file.exists()) return;
+        if (!file.exists())
+            return;
         Date date = new Date();
         final String time = DateUtil.date24Str(date, "yyyyMMdd_HHmm");
-        Runtime.getRuntime().addShutdownHook(new Thread() 
+        Runtime.getRuntime().addShutdownHook(new Thread()
         {
-            public void run() 
+            public void run()
             {
-                if (lines == null) return;
-                long now  = System.currentTimeMillis();
+                if (lines == null)
+                    return;
+                long now = System.currentTimeMillis();
                 File file2 = new File(file.getParentFile(), file.getName() + "." + time + ".txt");
                 FileUtil2.writeLines(lines, file2.getName(), null, WebUtil.LINE_WIN, file2.getParentFile());
                 _logger.info("\nwrite file, time|" + WebUtil.time(now) + "ms|length|" + file2.length() + "byte|" + file2.getAbsolutePath());
             }
         });
-        
+
         prompt = false;
-        long now  = System.currentTimeMillis();
+        long now = System.currentTimeMillis();
         _logger.info("dotext begin, " + DateUtil.str(date));
         lines = FileUtil2.readLines(file.getName(), null, file.getParentFile());
-        int size = lines.size(); 
+        int size = lines.size();
         _logger.info("\nread file, time|" + WebUtil.time(now) + "ms|length|" + file.length() + "byte|lines|" + size + "|" + file.getAbsolutePath() + "\n");
-        now  = System.currentTimeMillis();
+        now = System.currentTimeMillis();
         for (int i = 0; i < size; i++)
         {
             boolean changed = false;
@@ -122,21 +125,24 @@ public class WordSkyMain
             String orig = m.group(), dest = "";
             int start = m.start(), end = m.end();
             boolean b = (start > 0 && end < length && dchar(line.charAt(start - 1)) && dchar(line.charAt(end)));
-            if (",".equals(orig)) dest = (b ? "" : "，");
+            if (",".equals(orig))
+                dest = (b ? "" : "，");
             else if (".".equals(orig))
             {
-                if (b || (start > 0 && lchar(line.charAt(start - 1)))) 
+                if (b || (start > 0 && lchar(line.charAt(start - 1))))
                 {
                     m.appendReplacement(sb, orig);
                     result = m.find();
                     continue;
                 }
-                else dest = "。";
+                else
+                    dest = "。";
             }
             String head = (start < 1 ? "" : line.substring(Math.max(0, start - 6), start)), tail = (end < length ? line.substring(end, Math.min(length, end + 6)) : "");
             String info = "symbol(" + start + "," + end + "): " + head + "[" + orig + "]" + tail + " -> " + head + "[" + dest + "]" + tail;
             boolean flag = (prompt ? !"N".equalsIgnoreCase(readin(info)) : true);
-            if (flag) changed = true;
+            if (flag)
+                changed = true;
             m.appendReplacement(sb, flag ? dest : orig);
             _logger.info((flag ? "apply" : "left") + " - " + info);
             result = m.find();
@@ -157,17 +163,19 @@ public class WordSkyMain
             String orig = m.group(), dest = "";
             int start = m.start(), end = m.end();
             boolean b = (end < length && (luchar(line.charAt(end)) || (start > 0 && ldchar(line.charAt(start - 1)) && ldchar(line.charAt(end)))));
-            if ((start == 0 && orig.length() > 3) || (b && (end - start == 1))) 
+            if ((start == 0 && orig.length() > 3) || (b && (end - start == 1)))
             {
                 m.appendReplacement(sb, orig);
                 result = m.find();
                 continue;
             }
-            else if (b) dest = " ";
+            else if (b)
+                dest = " ";
             String head = (start < 1 ? "" : line.substring(Math.max(0, start - 6), start)), tail = (end < length ? line.substring(end, Math.min(length, end + 6)) : "");
             String info = "blank(" + start + "," + end + "): " + head + "[" + orig + "]" + tail + " -> " + head + "[" + dest + "]" + tail;
             boolean flag = (prompt ? !"N".equalsIgnoreCase(readin(info)) : true);
-            if (flag) changed = true;
+            if (flag)
+                changed = true;
             m.appendReplacement(sb, flag ? dest : orig);
             _logger.info((flag ? "apply" : "left") + " - " + info);
             result = m.find();
@@ -187,10 +195,12 @@ public class WordSkyMain
             String orig = m.group();
             String[] arr = orig.split("\\.", -1);
             String dest = arr[0];
-            for (int i = 1; i < arr.length; i++) dest += "." + (WebUtil.empty(arr[i]) ? "" : "0" + arr[i]);
+            for (int i = 1; i < arr.length; i++)
+                dest += "." + (WebUtil.empty(arr[i]) ? "" : "0" + arr[i]);
             String info = "date1(" + m.start() + "," + m.end() + "): [" + orig + "] -> [" + dest + "]";
             boolean flag = (prompt ? !"N".equalsIgnoreCase(readin(info)) : true);
-            if (flag) changed = true;
+            if (flag)
+                changed = true;
             m.appendReplacement(sb, flag ? dest : orig);
             _logger.info((flag ? "apply" : "left") + " - " + info);
             result = m.find();
@@ -214,9 +224,10 @@ public class WordSkyMain
             else
             {
                 dest = orig.substring(0, pos1) + "." + (pos2 - pos1 == 2 ? "0" : "") + orig.substring(pos1 + 1, pos2);
-                if (pos3 != -1) dest += "." + (pos3 - pos2 == 2 ? "0" : "") + orig.substring(pos2 + 1, pos3);
+                if (pos3 != -1)
+                    dest += "." + (pos3 - pos2 == 2 ? "0" : "") + orig.substring(pos2 + 1, pos3);
             }
-            if (orig.equals(dest)) 
+            if (orig.equals(dest))
             {
                 m.appendReplacement(sb, orig);
                 result = m.find();
@@ -224,7 +235,8 @@ public class WordSkyMain
             }
             String info = "date2(" + m.start() + "," + m.end() + "): [" + orig + "] -> [" + dest + "]";
             boolean flag = (prompt ? !"N".equalsIgnoreCase(readin(info)) : true);
-            if (flag) changed = true;
+            if (flag)
+                changed = true;
             m.appendReplacement(sb, flag ? dest : orig);
             _logger.info((flag ? "apply" : "left") + " - " + info);
             result = m.find();
@@ -238,65 +250,66 @@ public class WordSkyMain
         String str1 = "10元 1000人民币 10000元 100000RMB", str2 = str1.replaceAll("(\\d+)(元|人民币|RMB)", "￥$1");
         _logger.info("test1 done, [" + str1 + "] -> [" + str2 + "]");
     }
-    
+
     protected static void testblank()
     {
         String line = fmtblank(content);
         _logger.info("\ntestblank done\n[" + content + "]\n" + (line == null ? "not changed" : "[" + line + "]"));
     }
-    
+
     protected static void testdate1()
     {
         String line = fmtdate1(content);
         _logger.info("\ntestdate1 done\n[" + content + "]\n" + (line == null ? "not changed" : "[" + line + "]"));
     }
-    
+
     protected static void testdate2()
     {
         String line = fmtdate2(content);
         _logger.info("\ntestdate2 done\n[" + content + "]\n" + (line == null ? "not changed" : "[" + line + "]"));
     }
-    
+
     public static boolean ldchar(char c)
     {
         return (lchar(c) || dchar(c));
     }
-    
+
     public static boolean lchar(char c)
     {
         return (luchar(c) || Character.isLowerCase(c));
     }
-    
+
     public static boolean luchar(char c)
     {
         return Character.isUpperCase(c);
     }
-    
+
     public static boolean dchar(char c)
     {
         return (c >= '0' && c <= '9');
     }
-    
+
     public static String readin(String prompt)
     {
         String result = "";
-        try 
+        try
         {
             do
             {
                 System.out.print(prompt + ", press N will not make change.");
                 InputStreamReader is_reader = new InputStreamReader(System.in);
                 result = new BufferedReader(is_reader).readLine();
-                if ("Q".equalsIgnoreCase(result) || "quit".equalsIgnoreCase(result)) 
+                if ("Q".equalsIgnoreCase(result) || "quit".equalsIgnoreCase(result))
                 {
                     System.exit(0);
                     return "N";
                 }
-            }
-            while(false);
-        } 
-        catch (Exception e) {}
-        
+            } while (false);
+        }
+        catch (Exception e)
+        {
+        }
+
         return result;
     }
 
@@ -304,6 +317,6 @@ public class WordSkyMain
     private static final Pattern BLANK = Pattern.compile("( {1,})|(\\s{1,}$)");
     private static final Pattern DATE1 = Pattern.compile("((19|20)\\d{2})\\.\\d{1}((\\.\\d{1}[^\\d\\.])|([^\\d]))");
     private static final Pattern DATE2 = Pattern.compile("((\\d{1,4})\\年\\d{1,2}\\月(\\d{1,2}\\日)?)|(\\d{1,2}\\月\\d{1,2}\\日)");
-    
+
     private static final String content = "    大型补2007.3给门架，只是2016年1月29日在中 部每  舷2017.1.8各2017.1.08装1992年3月了两个   小艇投放架";
 }

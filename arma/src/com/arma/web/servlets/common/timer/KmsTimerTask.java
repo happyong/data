@@ -10,8 +10,8 @@ import com.neulion.iptv.web.util.timer.MethodJob;
 public class KmsTimerTask extends MethodJob
 {
     // flush keywords with rank, per 2 minutes, not used
-	public void refreshKeywords(JobExecutionContext context)
-	{
-		// KmsCacher.refreshKeywords();
-	}
+    public void refreshKeywords(JobExecutionContext context)
+    {
+        // KmsCacher.refreshKeywords();
+    }
 }

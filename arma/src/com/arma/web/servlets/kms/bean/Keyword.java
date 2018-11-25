@@ -12,10 +12,10 @@ import com.neulion.iptv.web.util.WebUtil;
 
 public class Keyword
 {
-	private TKeyword tkey;
-	
-	public Keyword fromRequest(HttpServletRequest request)
-	{
+    private TKeyword tkey;
+
+    public Keyword fromRequest(HttpServletRequest request)
+    {
         TKeyword bean = new TKeyword();
         bean.setKeyId(WebUtil.str2int(request.getParameter("keyId")));
         bean.setContent(request.getParameter("content"));
@@ -26,30 +26,35 @@ public class Keyword
         bean.setUpdateDate(new Date());
         setTkey(bean);
         return this;
-	}
-    
+    }
+
     public void setKeyId(int keyId)
     {
-        if (keyId < 1) return;
-        if (tkey != null) tkey.setKeyId(keyId);
+        if (keyId < 1)
+            return;
+        if (tkey != null)
+            tkey.setKeyId(keyId);
     }
-    
+
     public boolean empty()
     {
         return (tkey == null || tkey.empty());
     }
-    
+
     public String name()
     {
         return (empty() ? "" : (WebUtil.empty(tkey.getNameCn()) ? WebUtil.unull(tkey.getNameEn()) : tkey.getNameCn()));
     }
 
-    public TKeyword getTkey() {
+    public TKeyword getTkey()
+    {
         return tkey;
     }
-    public void setTkey(TKeyword tkey) {
-        if (tkey == null || tkey.empty()) return;
+
+    public void setTkey(TKeyword tkey)
+    {
+        if (tkey == null || tkey.empty())
+            return;
         this.tkey = tkey;
     }
 }
-

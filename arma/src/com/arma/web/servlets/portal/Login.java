@@ -17,22 +17,22 @@ import com.neulion.iptv.web.util.WebUtil;
 
 public class Login extends AbstractBaseComponent
 {
-	private static final long serialVersionUID = 981945224268029476L;
+    private static final long serialVersionUID = 981945224268029476L;
 
-	@Override
-	// /servlets/login?username=admin&password=123456
-	protected String processRequest(HttpServletRequest request, HttpServletResponse response) 
-		throws ServletException, IOException 
-	{
-		String username = request.getParameter("username");
-		String password = request.getParameter("password");
-		Map<String, Object> map = WebUtil.param("result", false);
-		UserLogin user = UserHelper.userLogin(username, password);
-		if (user != null && !user.empty())
-		{
-			request.getSession().setAttribute(ConfigHelper.USER_LOGIN, user);
-			map.put("result", true);
-		}
-		return response("", WebUtil.FORMAT_JSON, map, request);
-	}
+    @Override
+    // /servlets/login?username=admin&password=123456
+            protected
+            String processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+    {
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        Map<String, Object> map = WebUtil.param("result", false);
+        UserLogin user = UserHelper.userLogin(username, password);
+        if (user != null && !user.empty())
+        {
+            request.getSession().setAttribute(ConfigHelper.USER_LOGIN, user);
+            map.put("result", true);
+        }
+        return response("", WebUtil.FORMAT_JSON, map, request);
+    }
 }

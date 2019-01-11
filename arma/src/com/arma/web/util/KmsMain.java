@@ -39,7 +39,7 @@ public class KmsMain
         String baseName = InVarAM.url_naval_usa.substring(pos1 + 1, pos2 + 1) + "{time}" + InVarAM.url_naval_usa.substring(pos3);
         System.out.println(" ====== stratfor start,  " + baseUrl + baseName + ", " + baseDir + " ====== ");
         System.out.println(" ====== stratfor forward ====== ");
-        for (long time = baseTime; time <= now && fetch >= 0; time += step)
+        for (long time = baseTime; time <= now; time += step)
             fetch = stratfor(time, baseName, baseUrl, baseDir);
         System.out.println(" ====== stratfor backward ====== ");
         for (long time = baseTime; fetch >= 0; time -= step)

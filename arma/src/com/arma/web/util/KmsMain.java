@@ -41,10 +41,10 @@ public class KmsMain
         System.out.println(" ====== stratfor forward ====== ");
         for (long time = baseTime; time <= now; time += step)
             fetch = stratfor(time, baseName, baseUrl, baseDir);
-        System.out.println(" ====== stratfor backward ====== ");
-        for (long time = baseTime; fetch >= 0; time -= step)
-            fetch = stratfor(time, baseName, baseUrl, baseDir);
-        System.out.println(" ====== stratfor end ====== ");
+        // System.out.println(" ====== stratfor backward ====== ");
+        // for (long time = baseTime; fetch >= 0; time -= step)
+        //     fetch = stratfor(time, baseName, baseUrl, baseDir);
+        System.out.println(" ====== stratfor end " + fetch + " ====== ");
     }
 
     private static int stratfor(long ltime, String baseName, String baseUrl, String baseDir)

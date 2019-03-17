@@ -35,7 +35,7 @@ public class AwsUtil
         AmazonEC2 ec2 = null;
         try
         {
-            AWSCredentials cred = new PropertiesCredentials(new File("c:/credentials4.properties"));
+            AWSCredentials cred = new PropertiesCredentials(new File("c:/credentials.properties"));
             // us-east-1*, ap-northeast-1*
             ec2 = AmazonEC2ClientBuilder.standard().withCredentials(new AWSStaticCredentialsProvider(cred)).withRegion("ap-northeast-1").build();
         }

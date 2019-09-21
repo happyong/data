@@ -126,7 +126,7 @@ public class InVarAM
     public static final String s_vote_key = "党{cand}赢得{name1}({name2})共{count}张";
     public static final String s_vote_val = "    {no}\t{name1}\t\t{name2}\t\t{count}\t{cand}\t\t{v1}-{v2}\t\t东部07:00开票，19:00闭票，北京{time}结果{info}";
 
-    public static final String dir_naval_usa = "E:/Data/生活/maps/militray/美军动向/";
+    public static final String dir_naval_usa = "D:/Data/生活/maps/militray/美军动向/";
     public static final String url_naval_usa = "https://www.stratfor.com/sites/default/files/naval-update-11142018.png";
     public static final String key_user_agent = "User-Agent";
     public static final String def_user_agent = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36";

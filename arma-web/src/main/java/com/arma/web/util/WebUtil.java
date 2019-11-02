@@ -70,7 +70,7 @@ public class WebUtil
     public static final Pattern PATTERN_CN = Pattern.compile("[\u4e00-\u9fa5]");
     public static final Pattern field_pairs = Pattern.compile("[\\?\\&]([^=]+)=([^\\&]+)");
     public static final Pattern pt_duration = Pattern.compile("([-+]?)P(?:([-+]?[0-9]+)D)?" + "(T(?:([-+]?[0-9]+)H)?(?:([-+]?[0-9]+)M)?(?:([-+]?[0-9]+)(?:[.,]([0-9]{0,9}))?S)?)?",
-        Pattern.CASE_INSENSITIVE);
+            Pattern.CASE_INSENSITIVE);
 
     private static final Log _logger = LogFactory.getLog("web.WebUtil");
 
@@ -218,8 +218,7 @@ public class WebUtil
                 if (days != null || hours != null || minutes != null || seconds != null)
                 {
                     long ss = str2long(seconds) * 1000000L, mms = (fraction == null ? 0L : str2long((fraction + "000000").substring(0, 6)));
-                    long sum = str2long(days) * 86400000000L + str2long(hours) * 3600000000L + str2long(minutes) * 60000000L + ss
-                        + (ss < 0 ? 0 - mms : mms);
+                    long sum = str2long(days) * 86400000000L + str2long(hours) * 3600000000L + str2long(minutes) * 60000000L + ss + (ss < 0 ? 0 - mms : mms);
                     return (negate ? 0 - sum : sum);
                 }
             }
@@ -324,6 +323,13 @@ public class WebUtil
     public static String unull(Object str)
     {
         return (str == null ? "" : str.toString());
+    }
+
+    public static String str(String str)
+    {
+        if (empty(str))
+            return "";
+        return str.substring(1);
     }
 
     public static int pos(String key, String[] arr)
@@ -531,10 +537,8 @@ public class WebUtil
         if (empty(ip))
             return 0L;
         String[] ipArr = ip.split(".");
-        return (long) (Long.parseLong(ipArr[0]) * (long) Math.pow(2, 24)) +
-            (Long.parseLong(ipArr[1]) * (long) Math.pow(2, 16)) +
-            (Long.parseLong(ipArr[2]) * (long) Math.pow(2, 8)) +
-            (Long.parseLong(ipArr[3]));
+        return (long) (Long.parseLong(ipArr[0]) * (long) Math.pow(2, 24)) + (Long.parseLong(ipArr[1]) * (long) Math.pow(2, 16))
+                + (Long.parseLong(ipArr[2]) * (long) Math.pow(2, 8)) + (Long.parseLong(ipArr[3]));
     }
 
     public static String long2ip(long ipIntFormat)
@@ -694,7 +698,7 @@ public class WebUtil
                 prop.load(in);
 
                 vendor = prop.getProperty("Implementation-Vendor");
-                if (vendor == null || vendor.indexOf("NeuLion") < 0)
+                if (vendor == null)
                     continue;
                 version = prop.getProperty("Implementation-Version");
                 if (empty(version))
@@ -735,6 +739,11 @@ public class WebUtil
                 map.put(pair.substring(0, pos), pair.substring(pos + 1));
         }
         return map;
+    }
+
+    public static int compare(long ret)
+    {
+        return (ret > 0 ? 1 : (ret < 0 ? -1 : 0));
     }
 
     public static Process exec(boolean use_file, String cmd, File path) throws IOException

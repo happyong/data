@@ -12,6 +12,7 @@
         <my.version>1002</my.version>
         <my.manifest.vendor>Arma, Inc.</my.manifest.vendor>
         <my.manifest.version>${project.version} build ${my.version} ${maven.build.timestamp}</my.manifest.version>
+        <aws-java-sdk-version>1.11.660</aws-java-sdk-version>
     </properties>
 
     <build>
@@ -63,6 +64,20 @@
             <version>1.8.2</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk-ec2 -->
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-java-sdk-ec2</artifactId>
+            <version>${aws-java-sdk-version}</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk-s3 -->
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-java-sdk-s3</artifactId>
+            <version>${aws-java-sdk-version}</version>
+        </dependency>
+
         <!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
         <dependency>
             <groupId>commons-io</groupId>
@@ -102,7 +117,7 @@
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpasyncclient</artifactId>
-            <version>4.1.3</version>
+            <version>4.1.4</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.eclipse.jetty/jetty-webapp -->

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<arma-web>
+
+    <jetty-dummy enable="true" port="4680">
+        <dummy-base><![CDATA[./webapps/dummy]]></dummy-base>
+		<!-- dummy-ad-wrapper: http://127.0.0.1:4680/dummy/ad/vwrap -->
+		<!-- dummy-ad-beacon: http://127.0.0.1:4680/beacon -->
+        <service-ad-wrapper dummy="true"><![CDATA[https://ad.doubleclick.net/ddm/pfadx]]></service-ad-wrapper>
+        <service-ad-beacon dummy="true"><![CDATA[https://ad2.fw.msggo.com/ad/l/1]]></service-ad-beacon>
+    </jetty-dummy>
+
+</arma-web>

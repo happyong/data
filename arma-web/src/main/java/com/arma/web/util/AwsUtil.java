@@ -21,6 +21,7 @@ import com.amazonaws.services.ec2.model.DescribeInstancesResult;
 import com.amazonaws.services.ec2.model.Filter;
 import com.amazonaws.services.ec2.model.Instance;
 import com.amazonaws.services.ec2.model.Reservation;
+import com.arma.web.Config;
 import com.arma.web.util.aws.AmazonEC2Helper;
 
 public class AwsUtil
@@ -116,11 +117,13 @@ public class AwsUtil
 
     public static void main(String[] args)
     {
-        // init log4j
-        ArmaUtil.config();
+        Config.getInstance().setUp();
+        
         AwsUtil test = new AwsUtil();
         // test.ec2list();
         // test.ec2Start("i-0ded5bd3f19f13ae3");
         test.ec2Stop("i-0ded5bd3f19f13ae3");
+        
+        Config.getInstance().tearDown();
     }
 }

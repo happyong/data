@@ -8,10 +8,14 @@ import javax.xml.parsers.SAXParserFactory;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.log4j.xml.DOMConfigurator;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.ext.DefaultHandler2;
 
+import com.arma.web.server.JettyServer;
+import com.arma.web.support.client.ClientPool;
+import com.arma.web.support.client.ThreadPool;
 import com.arma.web.util.WebUtil;
 
 public class Config extends DefaultHandler2
@@ -31,10 +35,10 @@ public class Config extends DefaultHandler2
     private Config()
     {
     }
-
-    public static JettySetting getDummySetting()
+    
+    public static Config getInstance()
     {
-        return instance.dummySetting;
+        return instance;
     }
 
     private void load(String file)
@@ -91,6 +95,38 @@ public class Config extends DefaultHandler2
         // StringBuilder builder = new StringBuilder().append("ch, ").append(start).append('|').append(length).append('|').append(ch.length);
         // builder.append(", ").append(new String(ch, start, length).trim());
         // System.out.println(builder);
+    }
+
+    private JettyServer dummyServer;
+
+    public String setUp()
+    {
+        String user_dir = System.getProperty("user.dir");
+        System.setProperty("arma.home", user_dir);
+        DOMConfigurator.configure(user_dir + "/webapps/dummy/WEB-INF/conf/log4j.xml");
+        dummyServer = server(dummySetting);
+        ClientPool.initialize();
+        ThreadPool.initialize();
+        return user_dir;
+    }
+
+    public void tearDown()
+    {
+        ThreadPool.terminate();
+        ClientPool.terminate();
+        if (dummyServer != null)
+            dummyServer.destroy();
+    }
+
+    private JettyServer server(JettySetting setting)
+    {
+        if (setting == null || setting.empty())
+            return null;
+        JettyServer server = new JettyServer(setting.getPort(), -1, null, setting.getWebBase());
+        if (server.init())
+            return server;
+        _logger.error("jetty server startup fail, " + setting.getPort() + " on " + setting.getWebBase());
+        return null;
     }
 
     public class JettySetting

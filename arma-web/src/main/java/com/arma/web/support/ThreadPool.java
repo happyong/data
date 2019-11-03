@@ -1,4 +1,4 @@
-package com.arma.web.support.client;
+package com.arma.web.support;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.ScheduledExecutorService;
@@ -7,6 +7,8 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang.StringUtils;
+
+import com.arma.web.support.client.ClientThreadFactory;
 
 public class ThreadPool
 {

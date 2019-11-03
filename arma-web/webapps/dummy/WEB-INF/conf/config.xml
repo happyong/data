@@ -2,7 +2,7 @@
 
 <arma-web>
 
-    <jetty-dummy enable="true" port="4680">
+    <jetty-dummy enable="false" port="4680">
         <dummy-base><![CDATA[./webapps/dummy]]></dummy-base>
 		<!-- dummy-ad-wrapper: http://127.0.0.1:4680/dummy/ad/vwrap -->
 		<!-- dummy-ad-beacon: http://127.0.0.1:4680/beacon -->

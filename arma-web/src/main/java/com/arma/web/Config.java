@@ -14,23 +14,18 @@ import org.xml.sax.SAXException;
 import org.xml.sax.ext.DefaultHandler2;
 
 import com.arma.web.server.JettyServer;
+import com.arma.web.support.ThreadPool;
 import com.arma.web.support.client.ClientPool;
-import com.arma.web.support.client.ThreadPool;
 import com.arma.web.util.WebUtil;
 
 public class Config extends DefaultHandler2
 {
     private final JettySetting dummySetting = new JettySetting();
 
-    private String text; // only use for load configuration
+    private volatile String text; // only use for load configuration
 
-    private static final Config instance = new Config();
+    private static volatile Config instance = null;
     protected static final Log _logger = LogFactory.getLog(Config.class);
-
-    static
-    {
-        instance.load("./webapps/dummy/WEB-INF/conf/config.xml");
-    }
 
     private Config()
     {
@@ -38,6 +33,11 @@ public class Config extends DefaultHandler2
 
     public static Config getInstance()
     {
+        if (instance == null)
+        {
+            instance = new Config();
+            instance.load("./webapps/dummy/WEB-INF/conf/config.xml");
+        }
         return instance;
     }
 
@@ -97,7 +97,7 @@ public class Config extends DefaultHandler2
         // System.out.println(builder);
     }
 
-    private JettyServer dummyServer;
+    private volatile JettyServer dummyServer;
 
     public String setUp()
     {

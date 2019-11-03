@@ -118,12 +118,12 @@ public class AwsUtil
     public static void main(String[] args)
     {
         Config.getInstance().setUp();
-        
+
         AwsUtil test = new AwsUtil();
         // test.ec2list();
         // test.ec2Start("i-0ded5bd3f19f13ae3");
         test.ec2Stop("i-0ded5bd3f19f13ae3");
-        
+
         Config.getInstance().tearDown();
     }
 }

@@ -184,7 +184,7 @@ public class CoinUtil implements FutureCallback<HttpResponse>
 
         CoinUtil util = new CoinUtil();
         util.coindetail();
-        
+
         Config.getInstance().tearDown();
     }
 

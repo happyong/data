@@ -35,7 +35,7 @@ public class Config extends DefaultHandler2
     private Config()
     {
     }
-    
+
     public static Config getInstance()
     {
         return instance;

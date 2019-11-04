@@ -121,8 +121,8 @@ public class AwsUtil
 
         AwsUtil test = new AwsUtil();
         // test.ec2list();
-        // test.ec2Start("i-0ded5bd3f19f13ae3");
-        test.ec2Stop("i-0ded5bd3f19f13ae3");
+        // test.ec2Start("i-045d5809a4e50d74f");
+        test.ec2Stop("i-045d5809a4e50d74f");
 
         Config.getInstance().tearDown();
     }

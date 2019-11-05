@@ -149,12 +149,12 @@ public class TextUtil
         }
         return list;
     }
-    
+
     public class Section
     {
         private int lines;
         private String max;
-        
+
         private Section max(boolean forward, int pos, List<String> lines)
         {
             TrimText text = new TrimText(lines.get(pos)).trim();

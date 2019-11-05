@@ -132,7 +132,7 @@ public class InVarAM
     public static final String url_naval_usa = "https://www.stratfor.com/sites/default/files/naval-update-11142018.png";
     public static final String key_user_agent = "User-Agent";
     public static final String def_user_agent = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36";
-    
+
     public static boolean hitclx1(String line)
     {
         return (line.startsWith("第") && (line.indexOf("章") > 0 || line.endsWith("部"))) || "楔　子".equals(line);

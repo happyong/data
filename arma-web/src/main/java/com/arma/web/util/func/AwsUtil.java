@@ -1,4 +1,4 @@
-package com.arma.web.util;
+package com.arma.web.util.func;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -22,6 +22,8 @@ import com.amazonaws.services.ec2.model.Filter;
 import com.amazonaws.services.ec2.model.Instance;
 import com.amazonaws.services.ec2.model.Reservation;
 import com.arma.web.Config;
+import com.arma.web.util.DateUtil;
+import com.arma.web.util.WebUtil;
 import com.arma.web.util.aws.AmazonEC2Helper;
 
 public class AwsUtil

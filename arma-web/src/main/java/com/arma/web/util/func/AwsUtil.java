@@ -114,7 +114,7 @@ public class AwsUtil
             inst = AmazonEC2Helper.inststatedone(1, instId, ec2);
             WebUtil.sleep(5000);
         }
-        _logger.info("stopped " + instId + ", " + (inst == null ? "fail" : "done"));
+        _logger.info("stopped " + instId + ", " + (inst == null ? "fail" : "done, " + DateUtil.date24Str(inst.getLaunchTime(), DateUtil.df_zonz)));
     }
 
     public static void main(String[] args)

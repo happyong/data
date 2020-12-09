@@ -4,6 +4,7 @@
 package com.arma.web.servlets.kms.bean;
 
 import com.arma.web.service.bean.TFinance;
+import com.arma.web.util.InVarAM;
 import com.neulion.iptv.web.util.WebUtil;
 
 public class Finance

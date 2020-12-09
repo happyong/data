@@ -1,0 +1,15 @@
+eclipse.preferences.version=1
+encoding//WebContent/WEB-INF/template/script/arma.mysql.0.create.kms.sql=UTF-8
+encoding//src/com/arma/web/service/bean/TNetDaily.java=UTF-8
+encoding//src/com/arma/web/service/bean/TQuoteDaily.java=UTF-8
+encoding//src/com/arma/web/service/bean/TSymbol.java=UTF-8
+encoding//src/com/arma/web/servlets/fund/FundComparator.java=UTF-8
+encoding//src/com/arma/web/servlets/fund/FundRtStats.java=UTF-8
+encoding//src/com/arma/web/servlets/fund/FundSpider.java=UTF-8
+encoding//src/com/arma/web/servlets/kms/bean/Finance.java=UTF-8
+encoding//src/com/arma/web/util/InVarAM.java=UTF-8
+encoding//src/com/arma/web/util/KmsMain.java=UTF-8
+encoding//src/com/arma/web/util/WebMain.java=UTF-8
+encoding//src/com/arma/web/util/WordSkyMain.java=UTF-8
+encoding//src/test/InVarT.java=UTF-8
+encoding/<project>=UTF-8

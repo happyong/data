@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	<bean id="dscfg" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+		<property name="jdbcUrl">
+			<value><![CDATA[jdbc:mysql://127.0.0.1:3306/arma_cfg?useUnicode=true&characterEncoding=utf-8&autoReconnect=true&autoReconnectForPools=true]]></value>
+		</property>
+		<property name="driverClass" value="com.mysql.jdbc.Driver" />
+		<property name="user" value="sa" />
+		<property name="password" value="sapassword" />
+		<property name="minPoolSize" value="3" />
+		<property name="maxPoolSize" value="30" />
+		<property name="maxIdleTime" value="1800" />
+		<property name="maxStatements" value="0" />
+		<property name="maxStatementsPerConnection" value="100" />
+		<property name="idleConnectionTestPeriod" value="120" />
+	</bean>
+
+    <bean id="dsfunds" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+        <property name="jdbcUrl">
+            <value><![CDATA[jdbc:mysql://127.0.0.1:3306/arma_funds?useUnicode=true&characterEncoding=utf-8&autoReconnect=true&autoReconnectForPools=true]]></value>
+        </property>
+        <property name="driverClass" value="com.mysql.jdbc.Driver" />
+        <property name="user" value="sa" />
+        <property name="password" value="sapassword" />
+        <property name="minPoolSize" value="3" />
+        <property name="maxPoolSize" value="30" />
+        <property name="maxIdleTime" value="1800" />
+        <property name="maxStatements" value="0" />
+        <property name="maxStatementsPerConnection" value="100" />
+        <property name="idleConnectionTestPeriod" value="120" />
+    </bean>
+
+    <bean id="dskms" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+        <property name="jdbcUrl">
+            <value><![CDATA[jdbc:mysql://127.0.0.1:3306/arma_kms?useUnicode=true&characterEncoding=utf-8&autoReconnect=true&autoReconnectForPools=true]]></value>
+        </property>
+        <property name="driverClass" value="com.mysql.jdbc.Driver" />
+        <property name="user" value="sa" />
+        <property name="password" value="sapassword" />
+        <property name="minPoolSize" value="3" />
+        <property name="maxPoolSize" value="30" />
+        <property name="maxIdleTime" value="1800" />
+        <property name="maxStatements" value="0" />
+        <property name="maxStatementsPerConnection" value="100" />
+        <property name="idleConnectionTestPeriod" value="120" />
+    </bean>
+
+	<bean id="commonConfig" class="org.springframework.beans.factory.config.MapFactoryBean">
+		<property name="sourceMap">
+			<map>
+				<entry key="show.portal.service" value="true"/>
+				<!-- display menu if not set or set to "1", and hide menu if set to "0", the menus includes
+				funds, kms, charts-->
+				<entry key="menu.portal" value="011"/>
+			</map>
+		</property>
+	</bean>
+
+	<bean id="configDao" class="com.arma.web.service.ConfigDaoService">
+		<property name="dataSource" ref="dscfg" />
+	</bean>
+
+	<bean id="tfundDao" class="com.arma.web.service.TFundDaoService">
+		<property name="dataSource" ref="dsfunds" />
+	</bean>
+
+	<bean id="tkmsDao" class="com.arma.web.service.TKmsDaoService">
+		<property name="dataSource" ref="dskms" />
+	</bean>
+
+	<!--<bean name="DBSource.default" class="com.neulion.savanna.common.db.JcaDBSource">
+		<property name="name" value="default" />
+		<property name="defaultMapper" value="com.neulion.savanna.common.db.mapper.MapMapper" />
+		<property name="dataSource" ref="dscfg" />
+		<property name="transactionManager" ref="system.jtaTransactionManager" />
+		<property name="resourceManager" ref="system.resourceManager" />
+	</bean>	
+
+	<bean name="system.resourceManager" class="com.neulion.savanna.support.j2ee.ResourceManager" />
+	<bean name="system.jtaTransactionManager" class="com.neulion.savanna.support.j2ee.JtaTransactionManager" />
+
+	<bean name="service.abstractDaoDS" abstract="true">
+		<property name="dbSource" ref="DBSource.default"/>
+	</bean>
+	<bean name="tkmsDao" class="com.arma.web.service.TKmsDaoService" parent="service.abstractDaoDS" />-->
+
+</beans>

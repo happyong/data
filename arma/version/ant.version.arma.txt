@@ -1,0 +1,4 @@
+#Thu Oct 08 18:08:10 CST 2015
+buildnumber=1002
+buildversion=1.2
+patchnumber=2

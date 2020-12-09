@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+
+  <context-param>
+    <param-name>webAppRootKey</param-name>
+    <param-value>arma.home</param-value>
+  </context-param>
+  <context-param>
+    <param-name>checkIP</param-name>
+    <param-value>true</param-value>
+  </context-param>
+  <context-param>
+    <param-name>supportedLocales</param-name>
+    <!--<param-value>en_US|English</param-value>-->
+    <param-value>zh_CN|中文</param-value>
+  </context-param>
+  <!-- <context-param>
+    <param-name>checkHttpMethod</param-name>
+    <param-value>false</param-value>
+  </context-param> -->
+	  
+  <display-name>ARMA</display-name>
+  
+  <filter>   
+    <filter-name>encodingFilter</filter-name>  
+    <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>  
+      <init-param>  
+        <param-name>encoding</param-name>
+        <param-value>utf-8</param-value>  
+      </init-param>  
+  </filter>  
+  <filter>   
+    <filter-name>portalFilter</filter-name>  
+    <filter-class>com.arma.web.servlets.portal.PortalFilter</filter-class>  
+  </filter>  
+  <filter-mapping>  
+      <filter-name>encodingFilter</filter-name>  
+      <url-pattern>/servlets/*</url-pattern>  
+  </filter-mapping> 
+  <filter-mapping>  
+      <filter-name>portalFilter</filter-name>  
+      <url-pattern>/servlets/portal/*</url-pattern>  
+  </filter-mapping>    
+   
+  <listener>
+    <listener-class>com.arma.web.servlets.common.WebListener</listener-class>
+  </listener>
+
+  <servlet>
+    <servlet-name>SkyAdmin</servlet-name>
+    <servlet-class>com.arma.web.servlets.common.SkyAdmin</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>FundService</servlet-name>
+    <servlet-class>com.arma.web.servlets.fund.FundService</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>KmsService</servlet-name>
+    <servlet-class>com.arma.web.servlets.kms.KmsService</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>PortalService</servlet-name>
+    <servlet-class>com.arma.web.servlets.portal.PortalService</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>Login</servlet-name>
+    <servlet-class>com.arma.web.servlets.portal.Login</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>Logout</servlet-name>
+    <servlet-class>com.arma.web.servlets.portal.Logout</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>SkyAdmin</servlet-name>
+    <url-pattern>/servlets/admin/*</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>FundService</servlet-name>
+    <url-pattern>/servlets/funds/*</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>KmsService</servlet-name>
+    <url-pattern>/servlets/kms/*</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>PortalService</servlet-name>
+    <url-pattern>/servlets/portal/*</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Login</servlet-name>
+    <url-pattern>/servlets/login</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Logout</servlet-name>
+    <url-pattern>/servlets/logout</url-pattern>
+  </servlet-mapping>
+  
+  <welcome-file-list>
+	<welcome-file>index.html</welcome-file>
+  </welcome-file-list>
+  <jsp-config>
+	<jsp-property-group>
+	  <url-pattern>*.jsp</url-pattern>
+	  <el-ignored>false</el-ignored>
+	  <page-encoding>UTF-8</page-encoding>
+	</jsp-property-group>
+  </jsp-config>  
+  
+</web-app>

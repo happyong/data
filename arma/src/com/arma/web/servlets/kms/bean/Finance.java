@@ -121,7 +121,7 @@ public class Finance
 
     public String toText(int type)
     {
-        StringBuilder sb = new StringBuilder("    ");
+        StringBuilder sb = new StringBuilder(InVarAM.s_sep5).append(InVarAM.s_sep5);
         if (type >= 0 && type < 100)
         {
             // 2013年，中国国防预算为7410.62亿元，10.74%，合1196.57亿美元，12.87%，中央本级为7177.37亿元，10.74%。

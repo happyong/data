@@ -101,9 +101,9 @@ public class KmsUtil
         Map<String, List<String>> fleets = new HashMap<String, List<String>>();
         for (String line : lines)
         {
-            if (line.length() < 5 || !line.startsWith("    ") || !Character.isDigit(line.charAt(4)))
+            if (line.length() < 3 || !line.startsWith(InVarAM.s_sep5) || !Character.isDigit(line.charAt(2)))
                 continue;
-            Map<String, String> map = map(line.substring(4).split("\t"));
+            Map<String, String> map = map(line.substring(2).split("\t"));
             String val = InVarAM.s_fleet_val;
             for (String str : map.keySet())
                 val = WebUtil.substituteName("{" + str + "}", map.get(str), val);
@@ -448,7 +448,7 @@ public class KmsUtil
             lines.add(0, cur.toText(type));
             last = cur;
         }
-        FileUtil2.writeLines(lines, "arma.finance" + type + ".txt", null, WebUtil.LINE_WIN, new File("c:"));
+        FileUtil2.writeLines(lines, "arma.finance" + type + ".txt", null, WebUtil.LINE_WIN, new File("d:"));
         return true;
     }
 }

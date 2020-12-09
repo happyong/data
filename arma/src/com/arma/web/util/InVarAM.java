@@ -110,6 +110,7 @@ public class InVarAM
     public static final String s_sep2 = "(";
     public static final String s_sep3 = ", ";
     public static final String s_sep4 = "#";
+    public static final String s_sep5 = "　";
 
     public static final String[] s_coasts = new String[] { "海警", "海监", "渔政" };
     public static final String[][] s_rockets = { { "长征一号", "长征二号", "长征二号甲" }, { "长征二号丙", "长征二号丁", "长征三号", "长征二号捆" },
